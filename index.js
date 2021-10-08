@@ -3,6 +3,21 @@ const express = require('express'),
     cors = require('cors'),
     bodyParser = require('body-parser');
 
+
+    const express = require('express'),
+    app = express(),
+    mysql = require('mysql'), // import mysql module
+    cors = require('cors'),
+    bodyParser = require('body-parser');
+  
+  // setup database
+db = mysql.createConnection({
+    host: 'bx6qovbae9nvqwc7mgin-mysql.services.clever-cloud.com',
+    user: 'root',
+    password: 'vwfu8JeC2LLuvqlRAAHI',
+    database: 'bx6qovbae9nvqwc7mgin'
+  })
+
 // make server object that contain port property and the value for our server.
 var server = {
     port: 4040
