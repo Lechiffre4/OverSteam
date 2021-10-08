@@ -1,0 +1,19 @@
+{
+  "name": "oversteam",
+  "version": "1.0.0",
+  "description": "Better steam in javascript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Paracetamol56/OverSteam.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Paracetamol56/OverSteam/issues"
+  },
+  "homepage": "https://github.com/Paracetamol56/OverSteam#readme"
+}
