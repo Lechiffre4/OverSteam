@@ -28,6 +28,7 @@ var server = {
 // use the modules
 app.use(cors())
 app.use(bodyParser.json());
+app.use(express.static('public'));
 
 // starting the server
 
