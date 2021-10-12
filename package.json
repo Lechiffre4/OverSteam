@@ -2,7 +2,7 @@
   "name": "oversteam",
   "version": "1.0.0",
   "description": "Better steam in javascript",
-  "main": "index.js",
+  "main": "./database/database.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
