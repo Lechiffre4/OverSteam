@@ -1,30 +1,16 @@
 {
   "name": "oversteam",
-  "version": "1.0.0",
-  "description": "Better steam in javascript",
-  "main": "./database/database.js",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./bin/www"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Paracetamol56/OverSteam.git"
-  },
-  "author": "lechiffre4 & Paracetamol56",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Paracetamol56/OverSteam/issues"
-  },
-  "homepage": "https://github.com/Paracetamol56/OverSteam#readme",
   "dependencies": {
-    "body-parser": "^1.19.0",
-    "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "mysql": "^2.18.1",
-    "mysql2": "^2.3.0",
-    "sequelize": "^6.6.5"
-  },
-  "devDependencies": {
-    "dotenv": "^10.0.0"
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "jade": "~1.11.0",
+    "morgan": "~1.9.1"
   }
 }
