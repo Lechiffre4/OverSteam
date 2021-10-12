@@ -1,28 +1,19 @@
 const express = require('express'),
-app = express(),
-mysql = require('mysql'), // import mysql module
-cors = require('cors'),
-bodyParser = require('body-parser');
+  app = express(),
+  mysql = require('mysql'), // import mysql module
+  cors = require('cors'),
+  bodyParser = require('body-parser');
 const { Sequelize } = require('sequelize');
-  
-  // setup database
-  const sequelize = new Sequelize('bx6qovbae9nvqwc7mgin', 'uwjczwexdiyvjsop', 'vwfu8JeC2LLuvqlRAAHI', {
-    host: 'bx6qovbae9nvqwc7mgin-mysql.services.clever-cloud.com',
-    dialect: 'mysql',
-  });
 
-/*db = mysql.createConnection({
-    host: 'bx6qovbae9nvqwc7mgin-mysql.services.clever-cloud.com',
-    user: 'root',
-    password: 'vwfu8JeC2LLuvqlRAAHI',
-    database: 'bx6qovbae9nvqwc7mgin'
-  })*/
+// setup database
+const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASS, {
+  host: process.env.DB_HOST,
+  dialect: 'mysql',
+});
 
 // make server object that contain port property and the value for our server.
-
-
 var server = {
-    port: 3306
+  port: 3306
 };
 
 // use the modules
@@ -34,7 +25,7 @@ app.use(express.static('public'));
 
 app.listen(server.port, () => console.log(`Server started, listening port: ${server.port}`));
 
-
+// Database connection test
 try {
   sequelize.authenticate();
   console.log('Connection has been established successfully.');

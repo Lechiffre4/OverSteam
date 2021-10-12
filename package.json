@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/Paracetamol56/OverSteam.git"
   },
-  "author": "",
+  "author": "lechiffre4 & Paracetamol56",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Paracetamol56/OverSteam/issues"
@@ -23,5 +23,8 @@
     "mysql": "^2.18.1",
     "mysql2": "^2.3.0",
     "sequelize": "^6.6.5"
+  },
+  "devDependencies": {
+    "dotenv": "^10.0.0"
   }
 }
