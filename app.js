@@ -1,3 +1,5 @@
+const database = require('./database/database.js');
+
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -26,6 +28,13 @@ app.use('/users', usersRouter);
 app.use('/login', loginRouter);
 app.use('/signin', signinRouter);
 
+// Database connection test
+try {
+  database.sequelize.authenticate();
+  console.log('Connection has been established successfully.');
+} catch (error) {
+  console.error('Unable to connect to the database:', error);
+}
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
