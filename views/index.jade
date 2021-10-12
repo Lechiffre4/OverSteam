@@ -1,5 +1,16 @@
-extends layout
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    // importer le fichier de style
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    #container
+      h1.Title Welcome to OverSteam
+      h2.Username Create An Account
+      a(href='/signin')
+        button.button Sign in
+      h2.Username Login
+      a(href='/login')
+        button.button Login
 
-block content
-  h1= title
-  p Welcome to #{title}
