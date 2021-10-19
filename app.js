@@ -35,7 +35,12 @@ app.use('/signin', signinRouter);
 
 
 // Database connection test
-
+try {
+	db.authenticate();
+	console.log('Connection has been established successfully.');
+  } catch (error) {
+	console.error('Unable to connect to the database:', error);
+  }
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
