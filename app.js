@@ -11,6 +11,8 @@ var usersRouter = require('./routes/users');
 var loginRouter = require('./routes/login');
 var signinRouter = require('./routes/signin');
 
+
+var db = database.db;
 var app = express();
 
 // view engine setup
@@ -27,6 +29,14 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/login', loginRouter);
 app.use('/signin', signinRouter);
+
+// Database connection test
+try {
+  db.sequelize.authenticate();
+  console.log('Connection has been established successfully.');
+} catch (error) {
+  console.error('Unable to connect to the database:', error);
+}
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
