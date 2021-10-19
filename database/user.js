@@ -6,8 +6,3 @@ const User = sequelize.define("user", {
     name: DataTypes.TEXT,
     age: DataTypes.INTEGER,
 });
-
-(async () => {
-    await sequelize.sync({ force: true });
-    // Code here
-})();
