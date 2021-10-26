@@ -1,38 +1,27 @@
-var database = require('./database/database.js');
-
-
-var createError = require('http-errors');
 var express = require('express');
+var createError = require('http-errors');
 var path = require('path');
 var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var loginRouter = require('./routes/login');
-var signinRouter = require('./routes/signin');
 const { Sequelize } = require('sequelize');
 
-
+// Database
+var database = require('./database/database.js');
 var db = database.db;
+
+// Routers
+var apiRouter = require('./routes/apiRouter');
+var pageRouter = require('./routes/pageRouter');
+
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/login', loginRouter);
-app.use('/signin', signinRouter);
-
-
 
 // Database connection test
 try {
@@ -41,6 +30,12 @@ try {
 } catch (error) {
   console.error('Unable to connect to the database:', error);
 }
+
+// Setup routes
+//app.use('/user', apiRouter.post('/users/register/'));
+
+app.use('/', pageRouter.get('/'));
+app.use('/login', pageRouter.get('/user/signin'));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
