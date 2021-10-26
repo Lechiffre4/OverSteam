@@ -11,7 +11,7 @@ module.exports = router;
 
 /* GET user/singin listing. */
 router.get('/user/signin', function (req, res, next) {
-    res.render('loginSystem/signin');
+
 });
 
 module.exports = router;
@@ -19,7 +19,7 @@ module.exports = router;
 
 /* GET users/login listing. */
 router.get('/user/login/', function (req, res, next) {
-    res.render('loginSystem/login');
+
 });
 
 module.exports = router;
