@@ -32,8 +32,6 @@ try {
 }
 
 // Setup routes
-//app.use('/user', apiRouter.post('/users/register/'));
-
 app.use('/', pageRouter.get('/'));
 app.use('/login', pageRouter.get('/user/signin'));
 

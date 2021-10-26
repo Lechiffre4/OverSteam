@@ -11,6 +11,7 @@ const PASSWORD_REGEX = /^(?=.*\d).{4,8}$/;
 
 // Routes
 module.exports = {
+    // Register function
     register: function (req, res) {
 
         // Params
@@ -83,6 +84,7 @@ module.exports = {
         });
     },
 
+    // Login function
     login: function (req, res) {
 
         // Params
@@ -132,6 +134,8 @@ module.exports = {
             }
         });
     },
+
+    // Profile function
     getUserProfile: function (req, res) {
         // Getting auth header
         var headerAuth = req.headers['authorization'];
@@ -153,6 +157,8 @@ module.exports = {
             res.status(500).json({ 'error': 'cannot fetch user' });
         });
     },
+
+    // Update function
     updateUserProfile: function (req, res) {
         // Getting auth header
         var headerAuth = req.headers['authorization'];
