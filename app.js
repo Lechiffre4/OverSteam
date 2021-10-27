@@ -7,9 +7,11 @@ const { Sequelize } = require('sequelize');
 // Database
 var database = require('./database/database.js');
 var db = database.db;
+require('./model/user');
+
 
 // Routers
-var apiRouter = require('./routes/apiRouter');
+var apiRouter = require('./routes/apiRouter').router;
 var pageRouter = require('./routes/pageRouter');
 
 var app = express();
@@ -27,6 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 try {
   db.authenticate();
   console.log('Connection has been established successfully.');
+  
 } catch (error) {
   console.error('Unable to connect to the database:', error);
 }

@@ -1,5 +1,4 @@
-var model = require('../model/user');
-var model = require('../database/database');
+var {db} = require('../database/database');
 
 var bcrypt = require('bcrypt');
 var jwy = require('jsonwebtoken');
@@ -13,7 +12,7 @@ const PASSWORD_REGEX = /^(?=.*\d).{4,8}$/;
 module.exports = {
     // Register function
     register: function (req, res) {
-        console.log('user register called');
+
 
         // Params
         var email = req.body.email;
@@ -39,7 +38,7 @@ module.exports = {
 
         asyncLib.waterfall([
             function (done) {
-                models.User.findOne({
+                db.models.User.findOne({
                     attributes: ['email'],
                     where: { email: email }
                 })
@@ -60,11 +59,10 @@ module.exports = {
                 }
             },
             function (userFound, bcryptedPassword, done) {
-                var newUser = models.User.create({
+                var newUser = db.models.User.create({
                     email: email,
                     username: username,
                     password: bcryptedPassword,
-                    bio: bio,
                     isAdmin: 0
                 })
                     .then(function (newUser) {
@@ -98,7 +96,7 @@ module.exports = {
 
         asyncLib.waterfall([
             function (done) {
-                models.User.findOne({
+                model.User.findOne({
                     where: { email: email }
                 })
                     .then(function (userFound) {
@@ -145,7 +143,7 @@ module.exports = {
         if (userId < 0)
             return res.status(400).json({ 'error': 'wrong token' });
 
-        models.User.findOne({
+        model.User.findOne({
             attributes: ['id', 'email', 'username', 'bio'],
             where: { id: userId }
         }).then(function (user) {
@@ -170,7 +168,7 @@ module.exports = {
 
         asyncLib.waterfall([
             function (done) {
-                models.User.findOne({
+                model.User.findOne({
                     attributes: ['id', 'bio'],
                     where: { id: userId }
                 }).then(function (userFound) {
