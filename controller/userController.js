@@ -96,7 +96,7 @@ module.exports = {
 
         asyncLib.waterfall([
             function (done) {
-                model.User.findOne({
+                db.models.User.findOne({
                     where: { email: email }
                 })
                     .then(function (userFound) {
@@ -143,7 +143,7 @@ module.exports = {
         if (userId < 0)
             return res.status(400).json({ 'error': 'wrong token' });
 
-        model.User.findOne({
+        db.models.User.findOne({
             attributes: ['id', 'email', 'username', 'bio'],
             where: { id: userId }
         }).then(function (user) {
@@ -168,7 +168,7 @@ module.exports = {
 
         asyncLib.waterfall([
             function (done) {
-                model.User.findOne({
+                db.models.User.findOne({
                     attributes: ['id', 'bio'],
                     where: { id: userId }
                 }).then(function (userFound) {
