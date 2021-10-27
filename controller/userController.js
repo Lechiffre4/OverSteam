@@ -13,12 +13,13 @@ const PASSWORD_REGEX = /^(?=.*\d).{4,8}$/;
 module.exports = {
     // Register function
     register: function (req, res) {
+        console.log('user register called');
 
         // Params
         var email = req.body.email;
         var username = req.body.username;
         var password = req.body.password;
-        
+
 
         if (email == null || username == null || password == null) {
             return res.status(400).json({ 'error': 'missing parameters' });
