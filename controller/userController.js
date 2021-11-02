@@ -1,7 +1,6 @@
 var {db} = require('../database/database');
-
+var jwtUtils = require('../utils');
 var bcrypt = require('bcrypt');
-var jwy = require('jsonwebtoken');
 var asyncLib = require('async');
 
 // Constants
