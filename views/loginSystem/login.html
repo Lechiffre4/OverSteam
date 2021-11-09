@@ -71,18 +71,18 @@
           <form id="form">
             <fieldset>
               <legend>Log into your account</legend>
-              <div class="invalid-feedback" id="missing-parameters">Some parameters are missing</div>
+              <div class="alert alert-dismissible alert-danger d-none" id="invalid-input-alert">
+                <strong>Oh snap!</strong>
+                <p id="error-text"></p>Try to fix it and submit again
+              </div>
               <div class="form-group">
                 <label for="email" class="form-label mt-4">Email address</label>
                 <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
                   placeholder="Enter email">
-                <div class="invalid-feedback" id="user-not-exist-in-DB">This user do not exist in our database</div>
-                <div class="invalid-feedback" id="unable-to-verify-user">We are unable to verify this user</div>
               </div>
               <div class="form-group">
                 <label for="password" class="form-label mt-4">Password</label>
                 <input type="password" class="form-control" id="password" placeholder="Password">
-                <div class="invalid-feedback" id="invalid-password">Invalid password (should be ... todo)</div>
               </div>
             </fieldset>
             <p></p>
@@ -137,30 +137,16 @@
       })
       .then(function (data) {
         if (data.hasOwnProperty('error')) {
-          if (data.error == 'invalid password') {
-            console.log(data.error);
-            document.getElementById("password").classList.add("is-invalid");
-            document.getElementById("invalid-password").classList.add("d-block");
-          }
-          if (data.error == 'user not exist in DB') {
-            console.log(data.error);
-            document.getElementById("email").classList.add("is-invalid");
-            document.getElementById("user-not-exist-in-DB").classList.add("d-block");
-          }
-          if (data.error == 'unable to verify user') {
-            console.log(data.error);
-            document.getElementById("email").classList.add("is-invalid");
-            document.getElementById("user-not-exist-in-DB").classList.add("d-block");
-          }
-          if (data.error == 'missing parameters') {
-            console.log(data.error);
-            document.getElementById("missing-parameters").classList.add("d-block");
-          }
+          console.log(data.error);
+          document.getElementById("invalid-input-alert").classList.remove("d-none");
+          document.getElementById("error-text").innerHTML = data.error;
         }
         else {
+          document.getElementById("invalid-input-alert").classList.add("d-none");
+          console.log(data);
           // todo : store token
+          window.location.href = "../home";
         }
-        console.log(data)
       })
   })
 </script>
