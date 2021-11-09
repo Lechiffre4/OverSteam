@@ -5,7 +5,7 @@ var asyncLib = require('async');
 
 // Constants
 const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-const PASSWORD_REGEX = /^(?=.*\d).{4,8}$/;
+const PASSWORD_REGEX = /^(?=.*\d).{4,20}$/;
 
 // Routes
 module.exports = {
@@ -17,6 +17,7 @@ module.exports = {
         var email = req.body.email;
         var username = req.body.username;
         var password = req.body.password;
+        var passwordVerif = req.body.passwordVerif;
 
 
         if (email == null || username == null || password == null) {
@@ -32,7 +33,10 @@ module.exports = {
         }
 
         if (!PASSWORD_REGEX.test(password)) {
-            return res.status(400).json({ 'error': 'password invalid (must length 4 - 8 and include 1 number at least)' });
+            return res.status(400).json({ 'error': 'password invalid (must length 4 - 20 and include 1 number at least)' });
+        }
+        if (password != passwordVerif){
+            return res.status(400).json({ 'error': 'Confirmation password is not the same as password ' });
         }
 
         asyncLib.waterfall([
