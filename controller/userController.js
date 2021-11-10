@@ -1,12 +1,11 @@
-var {db} = require('../database/database');
-
+var { db } = require('../database/database');
+var jwtUtils = require('../utils');
 var bcrypt = require('bcrypt');
-var jwy = require('jsonwebtoken');
 var asyncLib = require('async');
 
 // Constants
 const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-const PASSWORD_REGEX = /^(?=.*\d).{4,8}$/;
+const PASSWORD_REGEX = /^(?=.*\d).{4,20}$/;
 
 // Routes
 module.exports = {
@@ -18,22 +17,26 @@ module.exports = {
         var email = req.body.email;
         var username = req.body.username;
         var password = req.body.password;
+        var passwordVerif = req.body.passwordVerif;
 
 
         if (email == null || username == null || password == null) {
-            return res.status(400).json({ 'error': 'missing parameters' });
+            return res.status(400).json({ 'error': 'Some parameters are missing' });
         }
 
         if (username.length >= 13 || username.length <= 4) {
-            return res.status(400).json({ 'error': 'wrong username (must be length 5 - 12)' });
+            return res.status(400).json({ 'error': 'Wrong username (must be length 5 - 12)' });
         }
 
         if (!EMAIL_REGEX.test(email)) {
-            return res.status(400).json({ 'error': 'email is not valid' });
+            return res.status(400).json({ 'error': 'Email is not valid' });
         }
 
         if (!PASSWORD_REGEX.test(password)) {
-            return res.status(400).json({ 'error': 'password invalid (must length 4 - 8 and include 1 number at least)' });
+            return res.status(400).json({ 'error': 'Wrong password (must length 4 - 20 and include 1 number at least)' });
+        }
+        if (password != passwordVerif) {
+            return res.status(400).json({ 'error': 'Confirmation password is not the same as password ' });
         }
 
         asyncLib.waterfall([
@@ -46,7 +49,7 @@ module.exports = {
                         done(null, userFound);
                     })
                     .catch(function (err) {
-                        return res.status(500).json({ 'error': 'unable to verify user' });
+                        return res.status(500).json({ 'error': 'Unable to verify user' });
                     });
             },
             function (userFound, done) {
@@ -55,7 +58,7 @@ module.exports = {
                         done(null, userFound, bcryptedPassword);
                     });
                 } else {
-                    return res.status(409).json({ 'error': 'user already exist' });
+                    return res.status(409).json({ 'error': 'This user already exist' });
                 }
             },
             function (userFound, bcryptedPassword, done) {
@@ -69,7 +72,7 @@ module.exports = {
                         done(newUser);
                     })
                     .catch(function (err) {
-                        return res.status(500).json({ 'error': 'cannot add user' });
+                        return res.status(500).json({ 'error': 'Cannot add this user' });
                     });
             }
         ], function (newUser) {
@@ -78,7 +81,7 @@ module.exports = {
                     'userId': newUser.id
                 });
             } else {
-                return res.status(500).json({ 'error': 'cannot add user' });
+                return res.status(500).json({ 'error': 'Cannot add this user' });
             }
         });
     },
@@ -91,7 +94,7 @@ module.exports = {
         var password = req.body.password;
 
         if (email == null || password == null) {
-            return res.status(400).json({ 'error': 'missing parameters' });
+            return res.status(400).json({ 'error': 'Some parameters are missing' });
         }
 
         asyncLib.waterfall([
@@ -103,7 +106,7 @@ module.exports = {
                         done(null, userFound);
                     })
                     .catch(function (err) {
-                        return res.status(500).json({ 'error': 'unable to verify user' });
+                        return res.status(500).json({ 'error': 'Unable to verify user' });
                     });
             },
             function (userFound, done) {
@@ -112,14 +115,14 @@ module.exports = {
                         done(null, userFound, resBycrypt);
                     });
                 } else {
-                    return res.status(404).json({ 'error': 'user not exist in DB' });
+                    return res.status(404).json({ 'error': 'This user does not exist in the database' });
                 }
             },
             function (userFound, resBycrypt, done) {
                 if (resBycrypt) {
                     done(userFound);
                 } else {
-                    return res.status(403).json({ 'error': 'invalid password' });
+                    return res.status(403).json({ 'error': 'Wrong password' });
                 }
             }
         ], function (userFound) {
@@ -129,7 +132,7 @@ module.exports = {
                     'token': jwtUtils.generateTokenForUser(userFound)
                 });
             } else {
-                return res.status(500).json({ 'error': 'cannot log on user' });
+                return res.status(500).json({ 'error': 'Cannot log on user' });
             }
         });
     },
