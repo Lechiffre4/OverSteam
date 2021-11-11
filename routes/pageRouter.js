@@ -3,22 +3,27 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-    res.render('index', { title: 'Express' });
+    res.render('index');
 });
 
 /* GET singin listing. */
 router.get('/signin', function (req, res, next) {
-    res.render('loginSystem/signin', { title: 'Express' });
+    res.render('loginSystem/signin');
 });
 
 /* GET login listing. */
 router.get('/login/', function (req, res, next) {
-    res.render('loginSystem/login', { title: 'Express' });
+    res.render('loginSystem/login');
+});
+
+/* GET profile listing. */
+router.get('/profile/', function (req, res, next) {
+    res.render('profile');
 });
 
 /* GET about page*/
 router.get('/about', function (req, res, next) {
-    res.render('about', { title: 'Express' });
+    res.render('about');
 })
 
 module.exports = router;
