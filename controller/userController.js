@@ -20,7 +20,7 @@ module.exports = {
         var passwordVerif = req.body.passwordVerif;
 
 
-        if (email == null || username == null || password == null) {
+        if (email == null || username == null || password == null) {nod
             return res.status(400).json({ 'error': 'Some parameters are missing' });
         }
 

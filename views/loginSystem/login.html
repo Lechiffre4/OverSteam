@@ -132,7 +132,7 @@
       })
     })
       .then(function (response) {
-        console.log(response);
+        console.log("response="+response.value);
         return response.json()
       })
       .then(function (data) {
@@ -142,9 +142,13 @@
           document.getElementById("error-text").innerHTML = data.error;
         }
         else {
-          document.getElementById("invalid-input-alert").classList.add("d-none");
-          console.log(data);
-          // todo : store token
+          document.getElementById("invalid-input-alert").classList.add("d-none")
+          var data = JSON.parse(JSON.stringify(data));
+          key= data.userId;
+          value = data.token;
+          sessionStorage.setItem(key,value);
+          key=""
+          value=""
           window.location.href = "../home";
         }
       })

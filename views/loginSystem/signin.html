@@ -99,7 +99,7 @@
             <br>
             <p>By clicking the submit button below, I hereby agree to and accept the following <a href="#">terms and
                 conditions</a> governing my use of the Oversteam website.</p>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary";>Submit</button>
           </form>
         </div>
       </div>
@@ -153,6 +153,7 @@
       .then(function (response) {
         console.log(response);
         return response.json()
+      }).then({
       })
       .then(function (data) {
         if (data.hasOwnProperty('error')) {
@@ -163,10 +164,10 @@
         else {
           document.getElementById("invalid-input-alert").classList.add("d-none");
           console.log(data);
-          // todo : store token
           window.location.href = "../home";
         }
       })
+
 
   })
 </script>
