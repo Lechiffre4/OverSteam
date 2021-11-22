@@ -149,7 +149,13 @@
 				else {
 					document.getElementById("invalid-input-alert").classList.add("d-none")
 					var data = JSON.parse(JSON.stringify(data));
-					document.cookie = "token="+data.token +";" + "expires=";
+
+					// Exiration date
+					let date = new Date(Date.now() + 86400000); //86400000ms = 1 jour
+					date = date.toUTCString();
+
+					// Cookie
+					document.cookie = "token=" + data.token + ";" + "expires=" + date;
 					window.location.href = "../home";
 				}
 			})
