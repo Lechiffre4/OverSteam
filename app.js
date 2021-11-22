@@ -2,6 +2,9 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 const { Sequelize } = require('sequelize');
+var middleware = require('./middleware/middleware');
+
+
 
 // Database
 var database = require('./database/database.js');
@@ -9,6 +12,12 @@ var db = database.db;
 require('./model/user');
 
 
+//function Middleware
+function logger(req,res,next)
+{
+    console.log("log");
+    next();
+}
 
 
 // Routers
@@ -35,6 +44,7 @@ try {
   console.error('Unable to connect to the database:', error);
 }
 
+app.use(logger);
 // Setup routes
 app.use('/', pageRouter.get('/'));
 app.use('/login', pageRouter.get('/user/signin'));
