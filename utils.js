@@ -29,5 +29,19 @@ module.exports = {
             } catch (err) { }
         }
         return userId;
+    },
+
+    checktoken : function(token)
+    {
+        if (token != null) 
+        {
+        	jwt.verify(token, process.env.SIGN_TOKEN);
+        	console.log("verified");
+
+        } 
+        else
+        {
+        	console.log("ca marche pas ")
+        }
     }
 }

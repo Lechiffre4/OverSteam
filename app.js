@@ -9,6 +9,8 @@ var db = database.db;
 require('./model/user');
 
 
+
+
 // Routers
 var apiRouter = require('./routes/apiRouter').router;
 var pageRouter = require('./routes/pageRouter');

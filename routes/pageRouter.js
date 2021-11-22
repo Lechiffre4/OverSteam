@@ -1,20 +1,12 @@
 var express = require('express');
 var router = express.Router();
 
+
+
+
 /* GET home page. */
 router.get('/', function (req, res, next) {
-    // token validation
-    var token = sessionStorage.getItem('value');
-
-    if (token) {
-        try {
-            console.log(jwt.verify(token, process.env.SIGN_TOKEN));
-            res.render('home');
-        } catch (err) {
-            sessionStorage.removeItem('value');
-            res.render('index');
-        }
-    }
+    res.render('index');
 });
 
 /* GET singin listing. */
@@ -36,5 +28,9 @@ router.get('/profile/', function (req, res, next) {
 router.get('/about', function (req, res, next) {
     res.render('about');
 })
+/* GET home page. */
+router.get('/home', function (req, res, next) {
+    res.render('home');
+});
 
 module.exports = router;
