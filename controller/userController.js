@@ -2,6 +2,7 @@ var { db } = require('../database/database');
 var jwtUtils = require('../utils');
 var bcrypt = require('bcrypt');
 var asyncLib = require('async');
+const { Relog } = require('../utils');
 
 // Constants
 const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -201,5 +202,19 @@ module.exports = {
                 return res.status(500).json({ 'error': 'cannot update user profile' });
             }
         });
-    }
+    },
+
+    // Profile function
+    getUserLoginInfo: function (userId,res) {
+        // Getting auth header
+        if (userId < 0)
+            return null;
+
+        db.models.User.findOne({
+            attributes: ['id', 'email','password'],
+            where: { id: userId }
+        }).then(function(result){
+            
+         })
+    },
 }

@@ -1,29 +1,46 @@
 var express = require('express');
+const { checktoken } = require('../utils');
 var router = express.Router();
+var utils = require('../utils')
+var bcrypt = require('bcrypt');
+var userController = require('../controller/userController')
 
 //////////////Functions//////////////////
 //function Middleware
 function auth(req,res,next)
 {
     var cookie = getcookie(req);
-    console.log(cookie[1]);
     if (cookie == null)
         next();
-    
-    console.log("already connected");
-    //Redirection si deja log
-    res.redirect("/home")
-      
+    try 
+    {
+        var token = cookie[1];
+        const decoded = checktoken(token);
+        console.log(decoded);
+        var Infos= JSON.parse(JSON.stringify(decoded));
+        console.log(Infos.userId);
+        userController.getUserLoginInfo(decoded.userId,res);
+        res.redirect("/home");
+        
+    }
+    catch (ex) 
+    { 
+        console.log(ex.message);
+        next(); 
+    } 
 }
 
 function getcookie(req) {
     var cookie = req.headers.cookie;
-    cookie = cookie.split('=');
-    if(cookie == null)
+    if(cookie == undefined || cookie==null)
     {
       return null;
     }
-    return cookie;
+    else
+    {
+        cookie = cookie.split('=');
+        return cookie;
+    }
 }
 /////////////////////////////////////////
 
@@ -44,7 +61,7 @@ router.get('/login/',auth, function (req, res, next) {
 });
 
 /* GET profile listing. */
-router.get('/profile/', function (req, res, next) {
+router.get('/profile/',auth, function (req, res, next) {
     res.render('profile');
 });
 
