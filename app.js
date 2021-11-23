@@ -13,15 +13,6 @@ require('./model/user');
 require('./model/game');
 require('./model/category');
 
-
-//function Middleware
-function logger(req,res,next)
-{
-    console.log("log");
-    next();
-}
-
-
 // Routers
 var apiRouter = require('./routes/apiRouter').router;
 var pageRouter = require('./routes/pageRouter');
@@ -37,6 +28,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
 // Database connection test
 try {
   db.authenticate();
@@ -46,7 +38,8 @@ try {
   console.error('Unable to connect to the database:', error);
 }
 
-app.use(logger);
+
+
 // Setup routes
 app.use('/', pageRouter.get('/'));
 app.use('/login', pageRouter.get('/user/signin'));

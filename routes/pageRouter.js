@@ -1,6 +1,31 @@
 var express = require('express');
 var router = express.Router();
 
+//////////////Functions//////////////////
+//function Middleware
+function auth(req,res,next)
+{
+    var cookie = getcookie(req);
+    console.log(cookie[1]);
+    if (cookie == null)
+        next();
+    
+    console.log("already connected");
+    //Redirection si deja log
+    res.redirect("/home")
+      
+}
+
+function getcookie(req) {
+    var cookie = req.headers.cookie;
+    cookie = cookie.split('=');
+    if(cookie == null)
+    {
+      return null;
+    }
+    return cookie;
+}
+/////////////////////////////////////////
 
 
 /* GET home page. */
@@ -14,7 +39,7 @@ router.get('/signin', function (req, res, next) {
 });
 
 /* GET login listing. */
-router.get('/login/', function (req, res, next) {
+router.get('/login/',auth, function (req, res, next) {
     res.render('loginSystem/login');
 });
 
