@@ -1,6 +1,7 @@
 // Imports
 var express = require('express');
 var usersCtrl = require('../controller/userController');
+var gameCtrl = require('../controller/gameController');
 
 // Router
 exports.router = (function () {
@@ -14,6 +15,9 @@ exports.router = (function () {
 
     // Game routes
     // === TODO HERE === //
+    apiRouter.route('/games/all').get(gameCtrl.getAllGames);
+    //gameCtrl.route('/games/category').get(gameCtrl.getGamesByCategory);
+    //gameCtrl.route('/games/user').get(gameCtrl.getGamesByUser);
 
     return apiRouter;
 })();
