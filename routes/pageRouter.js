@@ -27,9 +27,15 @@ router.get('/profile/', function (req, res, next) {
 router.get('/about', function (req, res, next) {
     res.render('about');
 })
+
 /* GET home page. */
 router.get('/home', function (req, res, next) {
     res.render('home');
+});
+
+/* GET shop page. */
+router.get('/shop', function (req, res, next) {
+    res.render('shop');
 });
 
 module.exports = router;
