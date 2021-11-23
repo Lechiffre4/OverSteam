@@ -70,7 +70,7 @@
                 <div class="page-header">
                     <h1>Shop</h1>
                 </div>
-                <div class="d-flex flex-wrap justify-content-between">
+                <div class="d-flex flex-wrap justify-content-between" id="game-list">
                     <div class="card border-primary mb-3" style="max-width: 20rem;">
                         <div class="card-header">Category</div>
                         <div class="card-body">
@@ -83,8 +83,6 @@
                             </div>
                         </div>
                     </div>
-
-
                 </div>
             </div>
 
@@ -116,9 +114,33 @@
 
 </body>
 <script>
+    var gameList = document.getElementById('game-list');
 
-
-
+    fetch("http://localhost:3000/api/games/all", {
+        method: 'GET'
+    })
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (data) {
+            if (data.length > 0) {
+                data.forEach(function (game) {
+                    console.log(game);
+                    gameList.innerHTML +=
+                        `<div class="card border-primary mb-3" style="max-width: 20rem;">
+                        <div class="card-header">` + "Category" + `</div>
+                        <div class="card-body">
+                            <h4 class="card-title">` + game['name'] + `</h4>
+                            <p class="card-text">` + game['description'] + `</p>
+                            <div class="d-flex justify-content-between">
+                                <a href="#" class="btn btn-primary">View more</a>
+                                <a href="#" class="btn btn-secondary">Add to my games</a>
+                            </div>
+                        </div>
+                    </div>`;
+                });
+            }
+        });
 </script>
 
 </html>
