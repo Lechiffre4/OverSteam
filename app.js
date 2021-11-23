@@ -7,6 +7,8 @@ const { Sequelize } = require('sequelize');
 var database = require('./database/database.js');
 var db = database.db;
 require('./model/user');
+require('./model/game');
+require('./model/category');
 
 
 

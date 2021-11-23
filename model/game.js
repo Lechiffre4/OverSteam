@@ -2,16 +2,16 @@
 const { DataTypes } = require('sequelize')
 const { db } = require('../database/database');
 
-var User = db.define('User', {
-    email: DataTypes.STRING,
-    username: DataTypes.STRING,
-    password: DataTypes.STRING,
-    isAdmin: DataTypes.BOOLEAN
+var Game = db.define('Game', {
+    name: DataTypes.STRING,
+    description: DataTypes.STRING,
+    author: DataTypes.STRING,
+    date: DataTypes.DATE,
 }, {
     classMethods: {
         associate: function (models) {
             // associations can be defined here
-            models.User.hasMany(models.Game);
+            models.User.hasMany(models.Category);
         }
     }
 });
