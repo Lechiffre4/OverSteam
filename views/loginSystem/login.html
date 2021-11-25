@@ -19,7 +19,7 @@
 			<div class="collapse navbar-collapse" id="navbarColor01">
 				<ul class="navbar-nav me-auto">
 					<li class="nav-item">
-						<a class="nav-link active" href="/">Home
+						<a class="nav-link" href="/">Home
 							<span class="visually-hidden">(current)</span>
 						</a>
 					</li>
@@ -137,29 +137,29 @@
 				password: password
 			})
 		})
-		.then(function (response) {
-			//console.log("response=" + response.value);
-			return response.json()
-		})
-		.then(function (data) {
-			if (data.hasOwnProperty('error')) {
-				console.log(data.error);
-				document.getElementById("invalid-input-alert").classList.remove("d-none");
-				document.getElementById("error-text").innerHTML = data.error;
-			}
-			else {
-				document.getElementById("invalid-input-alert").classList.add("d-none")
-				var data = JSON.parse(JSON.stringify(data));
+			.then(function (response) {
+				//console.log("response=" + response.value);
+				return response.json()
+			})
+			.then(function (data) {
+				if (data.hasOwnProperty('error')) {
+					console.log(data.error);
+					document.getElementById("invalid-input-alert").classList.remove("d-none");
+					document.getElementById("error-text").innerHTML = data.error;
+				}
+				else {
+					document.getElementById("invalid-input-alert").classList.add("d-none")
+					var data = JSON.parse(JSON.stringify(data));
 
-				// Exiration date
-				let date = new Date(Date.now() + 86400000); //86400000ms = 1 jour
-				date = date.toUTCString();
+					// Exiration date
+					let date = new Date(Date.now() + 86400000); //86400000ms = 1 jour
+					date = date.toUTCString();
 
-				// Cookie
-				document.cookie = "token=" + data.token + ";" + "expires=" + date;
-				window.location.href = "../home";
-			}
-		})
+					// Cookie
+					document.cookie = "token=" + data.token + ";" + "expires=" + date;
+					window.location.href = "../home";
+				}
+			})
 	})
 </script>
 
