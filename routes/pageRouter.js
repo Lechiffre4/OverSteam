@@ -14,13 +14,12 @@ function auth(req, res, next) {
     try {
         var token = cookie[1];
         const decoded = checktoken(token);
-        if (decoded != null)
-        {
+        if (decoded != null) {
             res.redirect('/home');
         }
         else
             next();
-        
+
     }
     catch (ex) {
         console.log(ex.message);
@@ -57,8 +56,13 @@ router.get('/login/', function (req, res, next) {
     res.render('loginSystem/login');
 });
 
+/* GET modify listing. */
+router.get('/profile/modify/', function (req, res, next) {
+    res.render('loginSystem/modify');
+});
+
 /* GET profile listing. */
-router.get('/profile/',auth, function (req, res, next) {
+router.get('/profile/', auth, function (req, res, next) {
     res.render('profile');
 });
 
