@@ -122,6 +122,28 @@
 
 
 <script>
+    // Get username and email
+    const token = document.cookie.split('=')[1];
+
+    fetch("http://localhost:3000/api/users/me", {
+        method: 'GET',
+        headers: {
+            'token': token
+        }
+    })
+        .then(function (response) {
+            console.log(response);
+            return response.json();
+        })
+        .then(function (data) {
+            console.log(data);
+            const email = data['email'];
+            const username = data['username'];
+
+            document.getElementById('email').value = email;
+            document.getElementById('username').value = username;
+        });
+
     var form = document.getElementById('form');
     form.addEventListener('submit', function (e) {
         e.preventDefault();
