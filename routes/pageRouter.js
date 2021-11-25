@@ -20,7 +20,7 @@ function auth(req,res,next)
         var Infos= JSON.parse(JSON.stringify(decoded));
         console.log(Infos.userId);
         userController.getUserLoginInfo(decoded.userId,res);
-        res.redirect("/home");
+        
         
     }
     catch (ex) 
