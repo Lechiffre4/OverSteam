@@ -204,20 +204,4 @@ module.exports = {
         });
     },
 
-    // Profile function
-    getUserLoginInfo: function (userId,res) {
-        // Getting auth header
-        if (userId < 0)
-            return null;
-
-        db.models.User.findOne({
-            attributes: ['id', 'email','username'],
-            where: { id: userId }
-        })
-        .then(function(result){
-            return res.status(201).json(result);
-        });
-            
-    }
-
 }

@@ -19,9 +19,9 @@ function auth(req,res,next)
         console.log(decoded);
         var Infos= JSON.parse(JSON.stringify(decoded));
         console.log(Infos.userId);
-        userController.getUserLoginInfo(decoded.userId,res);
-        
-        
+        userController.getUserProfile(req,res)
+        res.redirect('/home');
+          
     }
     catch (ex) 
     { 
