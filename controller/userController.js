@@ -174,7 +174,7 @@ module.exports = {
         asyncLib.waterfall([
             function (done) {
                 db.models.User.findOne({
-                    attributes: ['id', 'bio'],
+                    attributes: ['id', 'email','username'],
                     where: { id: userId }
                 }).then(function (userFound) {
                     done(null, userFound);
@@ -186,7 +186,8 @@ module.exports = {
             function (userFound, done) {
                 if (userFound) {
                     userFound.update({
-                        bio: (bio ? bio : userFound.bio)
+                        email: (email ? email : userFound.email),
+                        username: (username ? username : userFound.username)
                     }).then(function () {
                         done(userFound);
                     }).catch(function (err) {
