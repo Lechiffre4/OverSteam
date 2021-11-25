@@ -58,7 +58,7 @@ router.get('/login/', function (req, res, next) {
 });
 
 /* GET profile listing. */
-router.get('/profile/', function (req, res, next) {
+router.get('/profile/',auth, function (req, res, next) {
     res.render('profile');
 });
 

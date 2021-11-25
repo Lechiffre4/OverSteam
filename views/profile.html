@@ -104,7 +104,7 @@
 	<script src="/javascripts/bootstrap.bundle.min.js"></script>
 	<script>
 		const token = document.cookie.split('=')[1];
-
+		console.log(token);
 		fetch("http://localhost:3000/api/users/me", {
 			method: 'GET',
 			headers: {
