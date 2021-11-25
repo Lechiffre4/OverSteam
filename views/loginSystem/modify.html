@@ -127,9 +127,6 @@
         e.preventDefault();
         var email = document.getElementById("email").value
         var username = document.getElementById("username").value
-        var password = document.getElementById("password1").value
-        var passwordVerif = document.getElementById("password2").value
-
 
         fetch("http://localhost:3000/api/users/register", {
             method: 'POST',
