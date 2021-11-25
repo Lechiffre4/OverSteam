@@ -20,7 +20,7 @@ function auth(req,res,next) {
         }
         else
             next();
-        
+
     }
     catch (ex) {
         console.log(ex.message);
@@ -64,6 +64,11 @@ router.get('/signin', function (req, res, next) {
 /* GET login listing. */
 router.get('/login/', function (req, res, next) {
     res.render('loginSystem/login');
+});
+
+/* GET modify listing. */
+router.get('/profile/modify/', function (req, res, next) {
+    res.render('loginSystem/modify');
 });
 
 /* GET profile listing. */
