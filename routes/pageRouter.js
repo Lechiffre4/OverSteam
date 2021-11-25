@@ -7,7 +7,7 @@ var userController = require('../controller/userController')
 
 //////////////Functions//////////////////
 //function Middleware
-function auth(req, res, next) {
+function auth(req,res,next) {
     var cookie = getcookie(req);
     if (cookie == null)
         next();
@@ -16,7 +16,7 @@ function auth(req, res, next) {
         const decoded = checktoken(token);
         if (decoded != null)
         {
-            res.redirect('/home');
+
         }
         else
             next();
@@ -39,6 +39,15 @@ function getcookie(req) {
     }
 }
 
+function CookieExist(req,res,next)
+{
+    if(req.headers.cookie)
+    {
+        next();
+    }
+    else
+        res.redirect('/login');
+}
 /////////////////////////////////////////
 
 
@@ -58,7 +67,7 @@ router.get('/login/', function (req, res, next) {
 });
 
 /* GET profile listing. */
-router.get('/profile/',auth, function (req, res, next) {
+router.get('/profile/',CookieExist, function (req, res, next) {
     res.render('profile');
 });
 
