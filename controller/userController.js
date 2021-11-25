@@ -21,7 +21,8 @@ module.exports = {
         var passwordVerif = req.body.passwordVerif;
 
 
-        if (email == null || username == null || password == null) {nod
+        if (email == null || username == null || password == null) {
+            nod
             return res.status(400).json({ 'error': 'Some parameters are missing' });
         }
 
@@ -141,14 +142,14 @@ module.exports = {
     // Profile function
     getUserProfile: function (req, res) {
         // Getting auth header
-        var headerAuth = req.headers['authorization'];
+        var headerAuth = req.headers['token'];
         var userId = jwtUtils.getUserId(headerAuth);
 
         if (userId < 0)
             return res.status(400).json({ 'error': 'wrong token' });
 
         db.models.User.findOne({
-            attributes: ['id', 'email', 'username', 'bio'],
+            attributes: ['id', 'email', 'username', 'isAdmin'],
             where: { id: userId }
         }).then(function (user) {
             if (user) {

@@ -7,37 +7,32 @@ var userController = require('../controller/userController')
 
 //////////////Functions//////////////////
 //function Middleware
-function auth(req,res,next)
-{
+function auth(req, res, next) {
     var cookie = getcookie(req);
     if (cookie == null)
         next();
-    try 
-    {
+    try {
         var token = cookie[1];
         const decoded = checktoken(token);
         console.log(decoded);
-        var Infos= JSON.parse(JSON.stringify(decoded));
+        var Infos = JSON.parse(JSON.stringify(decoded));
         console.log(Infos.userId);
-        userController.getUserProfile(req,res)
+        userController.getUserProfile(req, res)
         res.redirect('/home');
-          
+
     }
-    catch (ex) 
-    { 
+    catch (ex) {
         console.log(ex.message);
-        next(); 
-    } 
+        next();
+    }
 }
 
 function getcookie(req) {
     var cookie = req.headers.cookie;
-    if(cookie == undefined || cookie==null)
-    {
-      return null;
+    if (cookie == undefined || cookie == null) {
+        return null;
     }
-    else
-    {
+    else {
         cookie = cookie.split('=');
         return cookie;
     }
@@ -56,12 +51,12 @@ router.get('/signin', function (req, res, next) {
 });
 
 /* GET login listing. */
-router.get('/login/',auth, function (req, res, next) {
+router.get('/login/', function (req, res, next) {
     res.render('loginSystem/login');
 });
 
 /* GET profile listing. */
-router.get('/profile/',auth, function (req, res, next) {
+router.get('/profile/', function (req, res, next) {
     res.render('profile');
 });
 
