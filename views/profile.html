@@ -108,8 +108,7 @@
 		fetch("http://localhost:3000/api/users/me", {
 			method: 'GET',
 			headers: {
-				"Content-Type": "application/json; charset=UTF-8",
-				token: { token }
+				'token': token
 			}
 		})
 			.then(function (response) {
@@ -118,11 +117,11 @@
 			})
 			.then(function (data) {
 				console.log(data);
-				// const email = data['email'];
-				// const username = data['username'];
+				const email = data['email'];
+				const username = data['username'];
 
-				// document.getElementById('emailValue').innerHTML = email;
-				// document.getElementById('usernameValue').innerHTML = username;
+				document.getElementById('emailValue').innerHTML = email;
+				document.getElementById('usernameValue').innerHTML = username;
 			});
 	</script>
 </body>
