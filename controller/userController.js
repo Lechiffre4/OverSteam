@@ -165,11 +165,12 @@ module.exports = {
     // Update function
     updateUserProfile: function (req, res) {
         // Getting auth header
-        var headerAuth = req.headers['authorization'];
+        var headerAuth = req.headers['token'];
         var userId = jwtUtils.getUserId(headerAuth);
 
         // Params
-        var bio = req.body.bio;
+        var email = req.body.email;
+        var username = req.body.username;
 
         asyncLib.waterfall([
             function (done) {
