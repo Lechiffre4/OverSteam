@@ -10,8 +10,8 @@ var Game = db.define('Game', {
 }, {
     classMethods: {
         associate: function (models) {
-            // associations can be defined here
-            models.User.hasMany(models.Category);
+            models.Game.hasOne(models.Category);
+            models.Game.belongsToMany(models.User);
         }
     }
 });

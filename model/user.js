@@ -10,7 +10,6 @@ var User = db.define('User', {
 }, {
     classMethods: {
         associate: function (models) {
-            // associations can be defined here
             models.User.hasMany(models.Game);
         }
     }
