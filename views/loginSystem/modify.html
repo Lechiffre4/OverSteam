@@ -144,22 +144,22 @@
             document.getElementById('username').value = username;
         });
 
+    // Submit form
     var form = document.getElementById('form');
     form.addEventListener('submit', function (e) {
         e.preventDefault();
         var email = document.getElementById("email").value
         var username = document.getElementById("username").value
 
-        fetch("http://localhost:3000/api/users/register", {
-            method: 'POST',
+        fetch("http://localhost:3000/api/users/modify", {
+            method: 'PUT',
             headers: {
-                "Content-Type": "application/json; charset=UTF-8"
+                "Content-Type": "application/json; charset=UTF-8",
+                'token': token
             },
             body: JSON.stringify({
                 email: email,
-                username: username,
-                password: password,
-                passwordVerif: passwordVerif
+                username: username
             })
         })
             .then(function (response) {
