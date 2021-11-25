@@ -14,12 +14,13 @@ function auth(req, res, next) {
     try {
         var token = cookie[1];
         const decoded = checktoken(token);
-        console.log(decoded);
-        var Infos = JSON.parse(JSON.stringify(decoded));
-        console.log(Infos.userId);
-        userController.getUserProfile(req, res)
-        res.redirect('/home');
-
+        if (decoded != null)
+        {
+            res.redirect('/home');
+        }
+        else
+            next();
+        
     }
     catch (ex) {
         console.log(ex.message);
@@ -37,6 +38,7 @@ function getcookie(req) {
         return cookie;
     }
 }
+
 /////////////////////////////////////////
 
 
