@@ -9,9 +9,7 @@ const { Sequelize } = require('sequelize');
 // Database
 var database = require('./database/database.js');
 var db = database.db;
-require('./model/user');
-require('./model/game');
-require('./model/category');
+require('./model/index');
 
 // Routers
 var apiRouter = require('./routes/apiRouter').router;

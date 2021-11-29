@@ -151,14 +151,14 @@
         `;
 	};
 
-    const token = document.cookie.split('=')[1];
-		console.log(token);
-		fetch("http://localhost:3000/api/users/me", {
-			method: 'GET',
-			headers: {
-				'token': token
-			}
-		})
+	const token = document.cookie.split('=')[1];
+	console.log(token);
+	fetch("http://localhost:3000/api/users/me", {
+		method: 'GET',
+		headers: {
+			'token': token
+		}
+	})
 		.then(function (response) {
 			console.log(response);
 			return response.json();
@@ -169,47 +169,47 @@
 			const username = data['username'];
 
 			var form = document.getElementById('form');
-	    	form.addEventListener('submit', function (e) {
-	    		e.preventDefault();
-	    		var name = document.getElementById("name").value
-	    		var desc = document.getElementById("desc").value
-	    		var link = document.getElementById("link").value
-            	var author = username;
-            	var category = document.getElementById("category").value
-        
-        
-        
-	    	fetch("http://localhost:3000/api/games/addgame", {
-	    		method: 'POST',
-	    		headers: {
-	    			"Content-Type": "application/json; charset=UTF-8"
-	    		},
-	    		body: JSON.stringify({
-	    			name: name,
-	    			description: desc,
-	    			link: link,
-	    			author: author,
-                    category: category
-	    		})
-	    	})
-	    		.then(function (response) {
-	    			return response.json()
-	    		})
-	    		.then(function (data) {
-	    			if (data.hasOwnProperty('error')) {
-	    				console.log(data.error);
-	    				document.getElementById("invalid-input-alert").classList.remove("d-none");
-	    				document.getElementById("error-text").innerHTML = data.error;
-	    			}
-	    			else {
-	    				document.getElementById("invalid-input-alert").classList.add("d-none");
-	    				console.log(data);
-	    				window.location.href = "../shop";
-	    			}
-	    		})
-	        })
-            
-        });
+			form.addEventListener('submit', function (e) {
+				e.preventDefault();
+				var name = document.getElementById("name").value
+				var desc = document.getElementById("desc").value
+				var link = document.getElementById("link").value
+				var author = username;
+				var category = document.getElementById("category").value
+
+
+
+				fetch("http://localhost:3000/api/games/addgame", {
+					method: 'POST',
+					headers: {
+						"Content-Type": "application/json; charset=UTF-8"
+					},
+					body: JSON.stringify({
+						name: name,
+						description: desc,
+						link: link,
+						author: author,
+						category: category
+					})
+				})
+					.then(function (response) {
+						return response.json()
+					})
+					.then(function (data) {
+						if (data.hasOwnProperty('error')) {
+							console.log(data.error);
+							document.getElementById("invalid-input-alert").classList.remove("d-none");
+							document.getElementById("error-text").innerHTML = data.error;
+						}
+						else {
+							document.getElementById("invalid-input-alert").classList.add("d-none");
+							console.log(data);
+							window.location.href = "../shop";
+						}
+					})
+			})
+
+		});
 </script>
 
 </html>
