@@ -51,7 +51,7 @@
 					</li>
 				</ul>
                 <div class="d-flex" id="btn">
-                    <ul class="navbar-nav me-auto">
+                    <ul class="navbar-nav me-auto" id="btn">
                         <li class="nav-item">
                             <a class="btn btn-secondary me-sm-2" href="/login">Login</a>
                         </li>
@@ -68,11 +68,47 @@
         <div class="bs-docs-section clearfix">
             <div class="row">
                 <div class="page-header d-flex justify-content-between">
-                    <h1>Shop</h1>
-                    <button class="btn btn-outline-secondary my-auto">Add a Game</button>
+                    <h1>Add a Game</h1>
                 </div>
-                <div class="d-flex flex-wrap justify-content-left" id="game-list">
-                </div>
+                <form id="form">
+                    <fieldset>
+                        <div class="alert alert-dismissible alert-danger d-none" id="invalid-input-alert">
+                            <strong>Oh snap!</strong>
+                            <p id="error-text"></p>Try to fix it and submit again
+                        </div>
+                        <div class="form-group">
+                            <label for="name" class="form-label mt-4">Name</label>
+                            <input type="text" class="form-control" id="name" aria-describedby="emailhelp"
+                                placeholder="Enter the name of the game">
+                        </div>
+                        <div class="form-group">
+                            <label for="description" class="form-label mt-4">description</label>
+                            <input type="text" class="form-control" id="username" aria-describedby="emailHelp"
+                                placeholder="Enter the description of the game">
+                        </div>
+                        <div class="form-group">
+                            <label for="description" class="form-label mt-4">Category</label>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">Sandbox</a>
+                                <a class="dropdown-item" href="#">Real-time strategy (RTS)</a>
+                                <a class="dropdown-item" href="#">Shooters (FPS and TPS)</a>
+                                <a class="dropdown-item" href="#">Multiplayer online battle arena (MOBA)</a>
+                                <a class="dropdown-item" href="#">Role-playing (RPG, ARPG, and More)</a>
+                                <a class="dropdown-item" href="#">Simulation and sports</a>
+                                <a class="dropdown-item" href="#">Puzzlers and party games</a>
+                                <a class="dropdown-item" href="#">Action-adventure</a>
+                                <a class="dropdown-item" href="#">Survival and horror</a>
+                                <a class="dropdown-item" href="#">Platformer</a>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="form-label mt-4">Link</label>
+                            <input type="link" class="form-control" id="link" placeholder="Enter the link to the game">
+                        </div>
+                    </fieldset>
+                    <br>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
             </div>
 
             <footer id="footer">
@@ -115,9 +151,6 @@
         </ul>
         `;
     };
-
-    
-    const gameList = document.getElementById('game-list');
 
     fetch("http://localhost:3000/api/games/all", {
         method: 'GET'
