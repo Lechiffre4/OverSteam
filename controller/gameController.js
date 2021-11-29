@@ -22,9 +22,9 @@ module.exports = {
     addGame: function(req,res){
 
         var name = req.body.name;
-        var desc = req.body.desc;
+        var desc = req.body.description;
         var link = req.body.link;
-        var author = req.body.author;
+        var author = "c'est caca123";
         //var category = req.body.category;
 
 
@@ -54,7 +54,6 @@ module.exports = {
                     description: desc,
                     author: author,
                     link: link,
-                    date : Date.now()
 
                 })
                     .then(function (newGame) {

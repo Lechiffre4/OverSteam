@@ -159,6 +159,7 @@
 		var name = document.getElementById("name").value
 		var desc = document.getElementById("desc").value
 		var link = document.getElementById("link").value
+        var author = "c'est moi";
 		
 
         fetch("http://localhost:3000/api/games/addgame", {
@@ -170,7 +171,7 @@
 				name: name,
 				description: desc,
 				link: link,
-				author: "moi pour le moment"
+				author: author
 			})
 		})
 		.then(function (response) {

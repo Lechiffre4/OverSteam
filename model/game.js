@@ -7,7 +7,6 @@ var Game = db.define('Game', {
     description: DataTypes.STRING,
     author: DataTypes.STRING,
     link: DataTypes.STRING,
-    date: DataTypes.DATE,
 }, {
     classMethods: {
         associate: function (models) {
