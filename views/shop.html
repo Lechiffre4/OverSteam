@@ -19,38 +19,38 @@
 
             <div class="collapse navbar-collapse" id="navbarColor01">
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">Home
-                            <span class="visually-hidden">(current)</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/shop">Shop</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
-                            aria-haspopup="true" aria-expanded="false">Categories</a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Sandbox</a>
-                            <a class="dropdown-item" href="#">Real-time strategy (RTS)</a>
-                            <a class="dropdown-item" href="#">Shooters (FPS and TPS)</a>
-                            <a class="dropdown-item" href="#">Multiplayer online battle arena (MOBA)</a>
-                            <a class="dropdown-item" href="#">Role-playing (RPG, ARPG, and More)</a>
-                            <a class="dropdown-item" href="#">Simulation and sports</a>
-                            <a class="dropdown-item" href="#">Puzzlers and party games</a>
-                            <a class="dropdown-item" href="#">Action-adventure</a>
-                            <a class="dropdown-item" href="#">Survival and horror</a>
-                            <a class="dropdown-item" href="#">Platformer</a>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/profile">Profile</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/about">About</a>
-                    </li>
-                </ul>
-                <div class="d-flex">
+					<li class="nav-item">
+						<a class="nav-link" href="/">Home
+							<span class="visually-hidden">(current)</span>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/shop">Shop</a>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+							aria-haspopup="true" aria-expanded="false">Categories</a>
+						<div class="dropdown-menu">
+							<a class="dropdown-item" href="#">Sandbox</a>
+							<a class="dropdown-item" href="#">Real-time strategy (RTS)</a>
+							<a class="dropdown-item" href="#">Shooters (FPS and TPS)</a>
+							<a class="dropdown-item" href="#">Multiplayer online battle arena (MOBA)</a>
+							<a class="dropdown-item" href="#">Role-playing (RPG, ARPG, and More)</a>
+							<a class="dropdown-item" href="#">Simulation and sports</a>
+							<a class="dropdown-item" href="#">Puzzlers and party games</a>
+							<a class="dropdown-item" href="#">Action-adventure</a>
+							<a class="dropdown-item" href="#">Survival and horror</a>
+							<a class="dropdown-item" href="#">Platformer</a>
+						</div>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" href="/profile">Profile</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/about">About</a>
+					</li>
+				</ul>
+                <div class="d-flex" id="btn">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
                             <a class="btn btn-secondary me-sm-2" href="/login">Login</a>
@@ -70,19 +70,7 @@
                 <div class="page-header">
                     <h1>Shop</h1>
                 </div>
-                <div class="d-flex flex-wrap justify-content-between" id="game-list">
-                    <div class="card border-primary mb-3" style="max-width: 20rem;">
-                        <div class="card-header">Category</div>
-                        <div class="card-body">
-                            <h4 class="card-title">Game name</h4>
-                            <p class="card-text">Some quick example text to build on the card title and make up the
-                                bulk of the card's content.</p>
-                            <div class="d-flex justify-content-between">
-                                <a href="#" class="btn btn-primary">View more</a>
-                                <a href="#" class="btn btn-secondary">Add to my games</a>
-                            </div>
-                        </div>
-                    </div>
+                <div class="d-flex flex-wrap justify-content-left" id="game-list">
                 </div>
             </div>
 
@@ -114,6 +102,20 @@
 
 </body>
 <script>
+    const buttons = document.getElementById('btn');
+
+    if(document.cookie)
+    {
+        buttons.innerHTML =
+        `<ul class="navbar-nav me-auto">
+            <li class="nav-item">
+                <a class="btn btn-secondary me-sm-2" href="/login">Disconnect</a>
+            </li>
+        </ul>
+        `;
+    };
+
+    
     const gameList = document.getElementById('game-list');
 
     fetch("http://localhost:3000/api/games/all", {
@@ -127,7 +129,7 @@
                 data.forEach(function (game) {
                     console.log(game);
                     gameList.innerHTML +=
-                        `<div class="card border-primary mb-3" style="max-width: 20rem;">
+                        `<div class="card border-primary mb-3 mx-3" style="width: 20rem;">
                         <div class="card-header">` + "Category" + `</div>
                         <div class="card-body">
                             <h4 class="card-title">` + game['name'] + `</h4>

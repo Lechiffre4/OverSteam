@@ -50,7 +50,7 @@
 					</li>
 				</ul>
 				<div class="d-flex">
-					<ul class="navbar-nav me-auto">
+					<ul class="navbar-nav me-auto" id="btn">
 						<li class="nav-item">
 							<a class="btn btn-secondary me-sm-2" href="/login">Login</a>
 						</li>
@@ -149,5 +149,20 @@
 	<script src="/javascripts/jquery-3.6.0.min.js"></script>
 	<script src="/javascripts/bootstrap.bundle.min.js"></script>
 </body>
+
+	<script>
+		const buttons = document.getElementById('btn');
+
+		if(document.cookie)
+		{
+			buttons.innerHTML =
+			`<ul class="navbar-nav me-auto">
+				<li class="nav-item">
+					<a class="btn btn-secondary me-sm-2" href="/login">Disconnect</a>
+				</li>
+			</ul>
+			`;
+		};
+	</script>
 
 </html>
