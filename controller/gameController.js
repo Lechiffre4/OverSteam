@@ -50,21 +50,25 @@ module.exports = {
 			},
 			function (GameFound, done) {
 				var newGame = db.models.Game.create({
-					name: name,
-					description: desc,
-					link: link,
+					name: { name },
+					description: { desc },
+					link: { link },
 					UserId: {
-						name: author
+						name: { author }
 					},
 					CategoryId: {
-						name: category
+						name: { category }
 					},
 				}, {
-					include: Category,
-					include: User,
+					include: [{
+						model: db.models.Category
+					},
+					{
+						model: db.models.User
+					}]
 				})
 					.then(function (newGame) {
-						console.log(newGame);
+						console.log("newGame");
 						done(newGame);
 					})
 					.catch(function (err) {
