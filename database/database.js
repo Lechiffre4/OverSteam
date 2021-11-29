@@ -14,6 +14,4 @@ const DataBase = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process
 
 DataBase.sync({});
 
-
-
 exports.db = DataBase;
