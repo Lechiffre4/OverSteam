@@ -1,18 +1,16 @@
 'use strict';
-const { DataTypes } = require('sequelize')
-const { db } = require('../database/database');
-
-var Game = db.define('Game', {
-    name: DataTypes.STRING,
-    description: DataTypes.STRING,
-    author: DataTypes.STRING,
-    link: DataTypes.STRING,
-    date: DataTypes.DATE,
-}, {
-    classMethods: {
-        associate: function (models) {
-            models.Game.hasOne(models.Category);
-            models.Game.belongsToMany(models.User);
-        }
-    }
-});
+module.exports = (sequelize, DataTypes) => {
+	var Game = sequelize.define('Game', {
+		name: DataTypes.STRING,
+		description: DataTypes.STRING,
+		date: DataTypes.DATE,
+	}, {
+		classMethods: {
+			associate: function (models) {
+				models.Game.hasMany(models.Category);
+				models.Game.belongsToMany(models.User);
+			}
+		}
+	});
+	return Game;
+}
