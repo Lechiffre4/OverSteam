@@ -3,15 +3,12 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 const { Sequelize } = require('sequelize');
 
-
-
-
 // Database
 var database = require('./database/database.js');
 var db = database.db;
-require('./model/user');
-require('./model/game');
-require('./model/category');
+// require('./model/user')
+// require('./model/game')
+// require('./model/category')
 
 // Routers
 var apiRouter = require('./routes/apiRouter').router;
@@ -28,17 +25,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
 // Database connection test
 try {
-  db.authenticate();
-  console.log('Database connection has been established successfully.');
+	db.authenticate();
+	console.log('Database connection has been established successfully.');
 
 } catch (error) {
-  console.error('Unable to connect to the database:', error);
+	console.error('Unable to connect to the database:', error);
 }
-
-
 
 // Setup routes
 app.use('/', pageRouter.get('/'));
@@ -49,15 +43,15 @@ app.use('/api/', apiRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-  next(res.status(404).render('error/404.html'));
+	next(res.status(404).render('error/404.html'));
 });
 
 // error handler
 app.use(function (req, res) {
-  console.log(req);
-  console.log(res);
-  // render the error page
-  res.status(500).render('error/500.html');
+	console.log(req);
+	console.log(res);
+	// render the error page
+	res.status(500).render('error/500.html');
 });
 
 module.exports = app;
