@@ -83,7 +83,7 @@
                         </div>
                         <div class="form-group">
                             <label for="description" class="form-label mt-4">description</label>
-                            <input type="text" class="form-control" id="username" aria-describedby="emailHelp"
+                            <input type="text" class="form-control" id="desc" aria-describedby="emailHelp"
                                 placeholder="Enter the description of the game">
                         </div>
                         <div class="form-group">
@@ -102,7 +102,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="password" class="form-label mt-4">Link</label>
+                            <label for="link" class="form-label mt-4">Link</label>
                             <input type="link" class="form-control" id="link" placeholder="Enter the link to the game">
                         </div>
                     </fieldset>
@@ -152,31 +152,43 @@
         `;
     };
 
-    fetch("http://localhost:3000/api/games/all", {
-        method: 'GET'
+
+    var form = document.getElementById('form');
+	form.addEventListener('submit', function (e) {
+		e.preventDefault();
+		var name = document.getElementById("name").value
+		var desc = document.getElementById("desc").value
+		var link = document.getElementById("link").value
+		
+
+        fetch("http://localhost:3000/api/games/addgame", {
+			method: 'POST',
+			headers: {
+				"Content-Type": "application/json; charset=UTF-8"
+			},
+			body: JSON.stringify({
+				name: name,
+				description: desc,
+				link: link,
+				author: "moi pour le moment"
+			})
+		})
+		.then(function (response) {
+			return response.json()
+		})
+		.then(function (data) {
+			if (data.hasOwnProperty('error')) {
+				console.log(data.error);
+				document.getElementById("invalid-input-alert").classList.remove("d-none");
+				document.getElementById("error-text").innerHTML = data.error;
+			}
+			else {
+				document.getElementById("invalid-input-alert").classList.add("d-none");
+				console.log(data);
+				window.location.href = "../shop";
+			}
+		})
     })
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (data) {
-            if (data.length > 0) {
-                data.forEach(function (game) {
-                    console.log(game);
-                    gameList.innerHTML +=
-                        `<div class="card border-primary mb-3 mx-3" style="width: 20rem;">
-                        <div class="card-header">` + "Category" + `</div>
-                        <div class="card-body">
-                            <h4 class="card-title">` + game['name'] + `</h4>
-                            <p class="card-text">` + game['description'] + `</p>
-                            <div class="d-flex justify-content-between">
-                                <a href="#" class="btn btn-primary">View more</a>
-                                <a href="#" class="btn btn-secondary">Add to my games</a>
-                            </div>
-                        </div>
-                    </div>`;
-                });
-            }
-        });
-</script>
+    </script>
 
 </html>
