@@ -7,15 +7,14 @@ var userController = require('../controller/userController')
 
 //////////////Functions//////////////////
 //function Middleware
-function auth(req,res,next) {
+function auth(req, res, next) {
     var cookie = getcookie(req);
     if (cookie == null)
         next();
     try {
         var token = cookie[1];
         const decoded = checktoken(token);
-        if (decoded != null)
-        {
+        if (decoded != null) {
 
         }
         else
@@ -39,10 +38,8 @@ function getcookie(req) {
     }
 }
 
-function CookieExist(req,res,next)
-{
-    if(req.headers.cookie)
-    {
+function CookieExist(req, res, next) {
+    if (req.headers.cookie) {
         next();
     }
     else
@@ -72,7 +69,7 @@ router.get('/profile/modify/', function (req, res, next) {
 });
 
 /* GET profile listing. */
-router.get('/profile/',CookieExist, function (req, res, next) {
+router.get('/profile/', CookieExist, function (req, res, next) {
     res.render('profile');
 });
 
@@ -90,8 +87,8 @@ router.get('/home', function (req, res, next) {
 router.get('/shop', function (req, res, next) {
     res.render('shop');
 });
-router.get('/AddaGame',CookieExist, function (req, res, next) {
-    res.render('AddGame');
+router.get('/addgame', CookieExist, function (req, res, next) {
+    res.render('addgame');
 });
 
 module.exports = router;
