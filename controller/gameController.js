@@ -24,8 +24,8 @@ module.exports = {
         var name = req.body.name;
         var desc = req.body.description;
         var link = req.body.link;
-        var author = "c'est caca123";
-        //var category = req.body.category;
+        var author = req.body.author;
+        var category = req.body.category;
 
 
         asyncLib.waterfall([
@@ -54,6 +54,7 @@ module.exports = {
                     description: desc,
                     author: author,
                     link: link,
+                    category:category
 
                 })
                     .then(function (newGame) {
