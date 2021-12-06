@@ -11,7 +11,7 @@ Category.hasMany(Game);
 Game.belongsTo(Category);
 
 // Category list
-categories = [
+const categories = [
 	"Sandbox",
 	"Real - time strategy(RTS)",
 	"Shooters(FPS and TPS)",

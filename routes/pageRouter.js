@@ -88,7 +88,7 @@ router.get('/shop', function (req, res, next) {
     res.render('shop');
 });
 router.get('/addgame', CookieExist, function (req, res, next) {
-    res.render('addgame');
+    res.render('addGame');
 });
 
 module.exports = router;

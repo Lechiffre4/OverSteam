@@ -11,7 +11,6 @@ module.exports = {
 			.then(function (games) {
 				if (games) {
 					res.status(201).json(games);
-					console.log(JSON.stringify(games, null, 2));
 				} else {
 					res.status(404).json({ 'error': 'no games were found' });
 				}
@@ -49,29 +48,23 @@ module.exports = {
 				}
 			},
 			function (GameFound, done) {
+				console.log(name);
 				var newGame = db.models.Game.create({
-					name: { name },
-					description: { desc },
-					link: { link },
-					UserId: {
-						name: { author }
-					},
-					CategoryId: {
-						name: { category }
+					name: name,
+					description: desc,
+					link: link,
+					categoryId: {
+						name: category
 					},
 				}, {
-					include: [{
-						model: db.models.Category
-					},
-					{
-						model: db.models.User
-					}]
+					include: db.models.Game.belongsTo(db.models.Category)
 				})
 					.then(function (newGame) {
 						console.log("newGame");
 						done(newGame);
 					})
 					.catch(function (err) {
+						console.log(newGame);
 						return res.status(500).json({ 'error': 'Cannot add this game' });
 					});
 			}
@@ -81,7 +74,6 @@ module.exports = {
 					'game': newGame.id
 				});
 			} else {
-				console.log("error");
 				return res.status(500).json({ 'error': 'Cannot add this game' });
 			}
 		});
