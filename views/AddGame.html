@@ -89,16 +89,6 @@
 						<div class="form-group">
 							<label for="exampleSelect1" class="form-label mt-4">Example select</label>
 							<select class="form-select" id="category">
-								<option>Sandbox</option>
-								<option>Real-time strategy (RTS)</option>
-								<option>Shooters (FPS and TPS)</option>
-								<option>Multiplayer online battle arena (MOBA)</option>
-								<option>Role-playing (RPG, ARPG, and More)</option>
-								<option>Simulation and sports</option>
-								<option>Puzzlers and party games</option>
-								<option>Action-adventure</option>
-								<option>Survival and horror</option>
-								<option>Platformer</option>
 							</select>
 						</div>
 						<div class="form-group">
@@ -138,6 +128,22 @@
 		<script src="/javascripts/custom.js"></script>
 
 </body>
+
+<script>
+	// Fill the select with the categories
+	$(document).ready(function () {
+		$.ajax({
+			url: '/api/categories/all',
+			type: 'GET',
+			success: function (data) {
+				for (let i = 0; i < data.length; i++) {
+					$('#category').append('<option>' + data[i].name + '</option>');
+				}
+			}
+		});
+	});
+</script>
+
 <script>
 	const buttons = document.getElementById('btn');
 
