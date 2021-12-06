@@ -137,7 +137,7 @@
 			type: 'GET',
 			success: function (data) {
 				for (let i = 0; i < data.length; i++) {
-					$('#category').append('<option>' + data[i].name + '</option>');
+					$('#category').append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
 				}
 			}
 		});
