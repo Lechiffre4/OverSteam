@@ -157,65 +157,47 @@
         `;
 	};
 
-	const token = document.cookie.split('=')[1];
-	console.log(token);
-	fetch("http://localhost:3000/api/users/me", {
-		method: 'GET',
-		headers: {
-			'token': token
+	token = document.cookie.split('=')[1];
+
+	$('#form').submit(function (e) {
+		e.preventDefault();
+		const name = $('#name').val();
+		const desc = $('#desc').val();
+		const category = $('#category').val();
+		const link = $('#link').val();
+
+		// Check if the input is valid
+		if (name.length < 1 || desc.length < 1 || category.length < 1 || link.length < 1) {
+			$('#invalid-input-alert').removeClass('d-none');
+			$('#error-text').text('Please fill all the fields');
+			return;
 		}
-	})
-		.then(function (response) {
-			console.log(response);
-			return response.json();
-		})
-		.then(function (data) {
-			console.log(data);
-			const email = data['email'];
-			const username = data['username'];
 
-			var form = document.getElementById('form');
-			form.addEventListener('submit', function (e) {
-				e.preventDefault();
-				var name = document.getElementById("name").value
-				var desc = document.getElementById("desc").value
-				var link = document.getElementById("link").value
-				var author = username;
-				var category = document.getElementById("category").value
-
-
-
-				fetch("http://localhost:3000/api/games/addgame", {
-					method: 'POST',
-					headers: {
-						"Content-Type": "application/json; charset=UTF-8"
-					},
-					body: JSON.stringify({
-						name: name,
-						description: desc,
-						link: link,
-						author: author,
-						category: category
-					})
-				})
-					.then(function (response) {
-						return response.json()
-					})
-					.then(function (data) {
-						if (data.hasOwnProperty('error')) {
-							console.log(data.error);
-							document.getElementById("invalid-input-alert").classList.remove("d-none");
-							document.getElementById("error-text").innerHTML = data.error;
-						}
-						else {
-							document.getElementById("invalid-input-alert").classList.add("d-none");
-							console.log(data);
-							window.location.href = "../shop";
-						}
-					})
-			})
-
+		// Send the data to the API
+		$.ajax({
+			url: 'http://localhost:3000/api/games/addgame',
+			type: 'POST',
+			data: {
+				name: name,
+				description: desc,
+				author: token,
+				category: category,
+				link: link
+			},
+			headers: {
+				'Authorization': 'Bearer ' + token
+			},
+			success: function (data) {
+				console.log(data);
+				window.location.href = '/';
+			},
+			error: function (data) {
+				console.log(data);
+				$('#invalid-input-alert').removeClass('d-none');
+				$('#error-text').text(data.responseJSON.message);
+			}
 		});
+	});
 </script>
 
 </html>

@@ -1,6 +1,6 @@
 var { db } = require('../database/database');
 var asyncLib = require('async');
-const Category = require('../model/category');
+const utils = require('../utils');
 
 // Routes
 module.exports = {
@@ -24,8 +24,14 @@ module.exports = {
 		var name = req.body.name;
 		var desc = req.body.description;
 		var link = req.body.link;
-		var author = req.body.author;
+		var author = utils.getUserId(req.headers.authorization);
 		var category = req.body.category;
+
+		console.log("name: " + name);
+		console.log("desc: " + desc);
+		console.log("link: " + link);
+		console.log("author: " + author);
+		console.log("category: " + category);
 
 		asyncLib.waterfall([
 			function (done) {
@@ -53,11 +59,8 @@ module.exports = {
 					name: name,
 					description: desc,
 					link: link,
-					categoryId: {
-						name: category
-					},
-				}, {
-					include: db.models.Game.belongsTo(db.models.Category)
+					CategoryId: category,
+					UserId: author,
 				})
 					.then(function (newGame) {
 						console.log("newGame");

@@ -9,7 +9,6 @@ module.exports = {
       .then(function (categories) {
         if (categories) {
           res.status(201).json(categories);
-          console.log(JSON.stringify(categories, null, 2));
         } else {
           res.status(404).json({ 'error': 'no categories were found' });
         }
