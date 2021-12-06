@@ -2,6 +2,7 @@
 var express = require('express');
 var usersCtrl = require('../controller/userController');
 var gameCtrl = require('../controller/gameController');
+var categoryCtrl = require('../controller/categoryController');
 
 // Router
 exports.router = (function () {
@@ -14,11 +15,13 @@ exports.router = (function () {
     apiRouter.route('/users/modify/').put(usersCtrl.updateUserProfile);
 
     // Game routes
-    // === TODO HERE === //
     apiRouter.route('/games/all').get(gameCtrl.getAllGames);
     apiRouter.route('/games/addgame').post(gameCtrl.addGame);
     //gameCtrl.route('/games/category').get(gameCtrl.getGamesByCategory);
     //gameCtrl.route('/games/user').get(gameCtrl.getGamesByUser);
+
+    // Category routes
+    apiRouter.route('/categories/all').get(categoryCtrl.getAllCategories);
 
     return apiRouter;
 })();
