@@ -1,9 +1,10 @@
 var express = require('express');
 const { checktoken } = require('../utils');
 var router = express.Router();
-var utils = require('../utils')
+var jwt = require('jsonwebtoken');
 var bcrypt = require('bcrypt');
 var userController = require('../controller/userController')
+require('dotenv').config();
 
 //////////////Functions//////////////////
 //function Middleware
@@ -22,7 +23,6 @@ function auth(req, res, next) {
 
     }
     catch (ex) {
-        console.log(ex.message);
         next();
     }
 }
@@ -33,15 +33,15 @@ function getcookie(req) {
         return null;
     }
     else {
-        cookie = cookie.split('=');
+        cookie = cookie.split('=')[1];
         return cookie;
     }
 }
 
 function CookieExist(req, res, next) {
-    if (req.headers.cookie) {
-        next();
-    }
+    var cookie = getcookie(req);
+    if (cookie)
+        next()
     else
         res.redirect('/login');
 }

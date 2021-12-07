@@ -36,8 +36,9 @@ module.exports = {
     {
         if (token != null) 
         {
-        	
         	console.log("verified");
+            console.clear()
+            console.log(jwt.verify(token, process.env.SIGN_TOKEN))
             return jwt.verify(token, process.env.SIGN_TOKEN);
         } 
         else
