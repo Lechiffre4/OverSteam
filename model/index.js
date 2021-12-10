@@ -10,6 +10,10 @@ Game.belongsToMany(User, { through: 'User_Game' });
 Category.hasMany(Game);
 Game.belongsTo(Category);
 
+// Game <-> User relationship
+Game.belongsTo(User);
+User.hasMany(Game);
+
 // Category list
 const categories = [
 	"Sandbox",
