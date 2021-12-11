@@ -152,7 +152,7 @@
         var email = document.getElementById("email").value
         var username = document.getElementById("username").value
 
-        fetch("http://localhost:3000/api/users/modify", {
+        fetch("/api/users/modify", {
             method: 'PUT',
             headers: {
                 "Content-Type": "application/json; charset=UTF-8",

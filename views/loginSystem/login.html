@@ -27,8 +27,8 @@
 						<a class="nav-link" href="/shop">Shop</a>
 					</li>
 					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
-							aria-haspopup="true" aria-expanded="false">Categories</a>
+						<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+							aria-expanded="false">Categories</a>
 						<div class="dropdown-menu">
 							<a class="dropdown-item" href="#">Sandbox</a>
 							<a class="dropdown-item" href="#">Real-time strategy (RTS)</a>
@@ -103,8 +103,7 @@
 					</ul>
 					<p>Made by <a href="https://github.com/Lechiffre4">Lechiffre4</a> and <a
 							href="https://github.com/Paracetamol56">Paracetamol56</a>.</p>
-					<p>Code released under the <a
-							href="https://github.com/Paracetamol56/OverSteam/blob/main/LICENSE">Apache
+					<p>Code released under the <a href="https://github.com/Paracetamol56/OverSteam/blob/main/LICENSE">Apache
 							License 2.0</a>.</p>
 					<p>Based on <a href="https://getbootstrap.com/" rel="nofollow">Bootstrap</a>. Icons from <a
 							href="https://fontawesome.com/" rel="nofollow">Font Awesome</a>. Web fonts from <a
@@ -128,7 +127,7 @@
 		var email = document.getElementById("email").value
 		var password = document.getElementById("password").value
 
-		fetch("http://localhost:3000/api/users/login", {
+		fetch("/api/users/login", {
 			method: 'POST',
 			headers: {
 				"Content-Type": "application/json; charset=UTF-8"
