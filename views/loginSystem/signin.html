@@ -27,8 +27,8 @@
 						<a class="nav-link" href="/shop">Shop</a>
 					</li>
 					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
-							aria-haspopup="true" aria-expanded="false">Categories</a>
+						<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+							aria-expanded="false">Categories</a>
 						<div class="dropdown-menu">
 							<a class="dropdown-item" href="#">Sandbox</a>
 							<a class="dropdown-item" href="#">Real-time strategy (RTS)</a>
@@ -93,13 +93,11 @@
 							</div>
 							<div class="form-group">
 								<label for="password" class="form-label mt-4">Confirm password</label>
-								<input type="password" class="form-control" id="password2"
-									placeholder="Repeat your password">
+								<input type="password" class="form-control" id="password2" placeholder="Repeat your password">
 							</div>
 						</fieldset>
 						<br>
-						<p>By clicking the submit button below, I hereby agree to and accept the following <a
-								href="#">terms and
+						<p>By clicking the submit button below, I hereby agree to and accept the following <a href="#">terms and
 								conditions</a> governing my use of the Oversteam website.</p>
 						<button type="submit" class="btn btn-primary" ;>Submit</button>
 					</form>
@@ -118,8 +116,7 @@
 					</ul>
 					<p>Made by <a href="https://github.com/Lechiffre4">Lechiffre4</a> and <a
 							href="https://github.com/Paracetamol56">Paracetamol56</a>.</p>
-					<p>Code released under the <a
-							href="https://github.com/Paracetamol56/OverSteam/blob/main/LICENSE">Apache
+					<p>Code released under the <a href="https://github.com/Paracetamol56/OverSteam/blob/main/LICENSE">Apache
 							License 2.0</a>.</p>
 					<p>Based on <a href="https://getbootstrap.com/" rel="nofollow">Bootstrap</a>. Icons from <a
 							href="https://fontawesome.com/" rel="nofollow">Font Awesome</a>. Web fonts from <a
@@ -146,7 +143,7 @@
 		var passwordVerif = document.getElementById("password2").value
 
 
-		fetch("http://localhost:3000/api/users/register", {
+		fetch("/api/users/register", {
 			method: 'POST',
 			headers: {
 				"Content-Type": "application/json; charset=UTF-8"
@@ -174,7 +171,7 @@
 					window.location.href = "../home";
 				}
 			})
-		})
+	})
 </script>
 
 </html>
