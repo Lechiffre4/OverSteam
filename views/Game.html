@@ -73,7 +73,8 @@
                 </div>
                     <div id="text">
                         <h3>Category</h3>
-                        <h2>Description</h2>
+                        <p>Description</p>
+                        <p>https://paypal.me/sahelh</p>
                     </div>
                 </div>
             </div>
@@ -172,7 +173,10 @@
                                         text.innerHTML =
                                             `
                                             <h3>`+cat['name']+`</h3>
-                                            <h2>`+game['description']+`</h2>
+                                            <p>`+game['description']+`</p>
+                                            <br/><br/><br/>
+                                            <a href="`+game['link']+`"  target="blank" class="btn btn-secondary pt-3 px-3">Official website</p>
+
                                         `; 
                                     }
                                 });
