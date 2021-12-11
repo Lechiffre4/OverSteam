@@ -146,21 +146,38 @@
         .then(function (data) {
             if (data.length > 0) {
                 data.forEach(function (game) {
-                    console.log(game);
+
                     if( game['id'] == id){
-                        const name = document.getElementById('name');
-                        name.innerHTML =
-                            `
-                            <h1>`+game['name']+`</h1>
-                            <a class="btn btn-outline-secondary my-auto" href="../shop">Shop</a>
-                        `; 
-                        
-                        const text = document.getElementById('text');
-                        text.innerHTML =
-                            `
-                            <h3>`+game['category']+`</h3>
-                            <h2>`+game['description']+`</h2>
-                        `; 
+
+                        //////fetch for the category/////////
+                        fetch("/api/categories/all", {
+                        method: 'GET'
+                        })
+                        .then(function (response) {
+                            return response.json();
+                        })
+                        .then(function (data) {
+                            if (data.length > 0) {
+                                data.forEach(function (cat) {
+
+                                    if (game['CategoryId'] == cat['id']){    
+                                        const name = document.getElementById('name');
+                                        name.innerHTML =
+                                            `
+                                            <h1>`+game['name']+`</h1>
+                                            <a class="btn btn-outline-secondary my-auto" href="../shop">Shop</a>
+                                        `; 
+
+                                        const text = document.getElementById('text');
+                                        text.innerHTML =
+                                            `
+                                            <h3>`+cat['name']+`</h3>
+                                            <h2>`+game['description']+`</h2>
+                                        `; 
+                                    }
+                                });
+                            }
+                        });
                     }
                 });
             }
