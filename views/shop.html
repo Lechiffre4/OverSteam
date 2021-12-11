@@ -169,35 +169,6 @@
             }
         });
 
-
-
-        fetch("/api/category/all", {
-        method: 'GET'
-        })
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (data) {
-            if (data.length > 0) {
-                data.forEach(function (cat) {
-                    gameid=game['id'];
-                    var loc = "/game?id="+gameid;
-                    gameList.innerHTML +=
-                        `<div class="card border-primary mb-3 mx-3" style="width: 20rem;">
-                            <div class="card-header" id ="category">` + game['CategoryId'] + `</div>
-                                <div class="card-body">
-                                    <h4 class="card-title">` + game['name'] + `</h4>
-                                    <p class="card-text">` + game['description'] + `</p>
-                                    <div class="d-flex justify-content-between">
-                                        <a href="` + loc + `"class="btn btn-primary">View more</a>
-                                        <a href="#" class="btn btn-secondary">Add to my games</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>`;
-                });
-            }
-        });
 </script>
 
 </html>
