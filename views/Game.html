@@ -67,11 +67,11 @@
     <div class="container">
         <div class="bs-docs-section clearfix">
             <div class="row">
-                <div class="page-header d-flex justify-content-between">
+                <div class="page-header d-flex justify-content-between" id ="name">
                     <h1>Name of the game</h1>
                     <a class="btn btn-outline-secondary my-auto" href="../shop">Shop</a>
                 </div>
-                    <div>
+                    <div id="text">
                         <h3>Category</h3>
                         <h2>Description</h2>
                     </div>
@@ -118,6 +118,53 @@
         </ul>
         `;
     };
+
+    function $_GET(param) {
+	var vars = {};
+	window.location.href.replace( location.hash, '' ).replace( 
+		/[?&]+([^=&]+)=?([^&]*)?/gi, // regexp
+		function( m, key, value ) { // callback
+			vars[key] = value !== undefined ? value : '';
+		}
+	);
+
+	if ( param ) {
+		return vars[param] ? vars[param] : null;	
+	}
+	return vars;
+    }
+
+    var id = $_GET('id');
+
+
+    fetch("http://localhost:3000/api/games/all", {
+        method: 'GET'
+    })
+        .then(function (response) {
+            return response.json();
+    })
+        .then(function (data) {
+            if (data.length > 0) {
+                data.forEach(function (game) {
+                    console.log(game);
+                    if( game['id'] == id){
+                        const name = document.getElementById('name');
+                        name.innerHTML =
+                            `
+                            <h1>`+game['name']+`</h1>
+                            <a class="btn btn-outline-secondary my-auto" href="../shop">Shop</a>
+                        `; 
+                        
+                        const text = document.getElementById('text');
+                        text.innerHTML =
+                            `
+                            <h3>`+game['category']+`</h3>
+                            <h2>`+game['description']+`</h2>
+                        `; 
+                    }
+                });
+            }
+        });
 
 </script>
 

@@ -6,7 +6,6 @@ const utils = require('../utils');
 module.exports = {
 	// All games function
 	getAllGames: function (req, res) {
-		console.log("getAllGames");
 		const games = db.models.Game.findAll()
 			.then(function (games) {
 				if (games) {
