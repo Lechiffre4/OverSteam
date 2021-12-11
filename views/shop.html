@@ -128,8 +128,9 @@
         .then(function (data) {
             if (data.length > 0) {
                 data.forEach(function (game) {
-                    console.log(game);
                     gameid=game['id'];
+                    console.log(gameid)
+                    var loc = "/game?id="+gameid;
                     gameList.innerHTML +=
                         `<div class="card border-primary mb-3 mx-3" style="width: 20rem;">
                             <div class="card-header">` + game['category'] + `</div>
@@ -137,7 +138,7 @@
                                     <h4 class="card-title">` + game['name'] + `</h4>
                                     <p class="card-text">` + game['description'] + `</p>
                                     <div class="d-flex justify-content-between">
-                                        <a href="/game" onclick="location.href=this.href+'?id='+gameid;return false;" class="btn btn-primary">View more</a>
+                                        <a href="` + loc + `"class="btn btn-primary">View more</a>
                                         <a href="#" class="btn btn-secondary">Add to my games</a>
                                     </div>
                                 </div>
