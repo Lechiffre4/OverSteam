@@ -126,7 +126,7 @@
     // Get username and email
     const token = document.cookie.split('=')[1];
 
-    fetch("http://localhost:3000/api/users/me", {
+    fetch("api/users/me", {
         method: 'GET',
         headers: {
             'token': token
