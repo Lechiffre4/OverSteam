@@ -93,4 +93,14 @@ router.get('/addgame', CookieExist, function (req, res, next) {
     res.render('addgame');
 });
 
+/* GET add game page. */
+router.get('/mygames', CookieExist, function (req, res, next) {
+    res.render('mygames');
+});
+
+/* GET add game page. */
+router.get('/game', CookieExist, function (req, res, next) {
+    res.render('game');
+});
+
 module.exports = router;
