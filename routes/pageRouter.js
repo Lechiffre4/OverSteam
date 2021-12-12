@@ -99,7 +99,7 @@ router.get('/mygames', CookieExist, function (req, res, next) {
 });
 
 /* GET add game page. */
-router.get('/game', CookieExist, function (req, res, next) {
+router.get('/game', function (req, res, next) {
     res.render('game');
 });
 
