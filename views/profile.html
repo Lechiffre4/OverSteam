@@ -29,17 +29,7 @@
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true"
 							aria-expanded="false">Categories</a>
-						<div class="dropdown-menu">
-							<a class="dropdown-item" href="#">Sandbox</a>
-							<a class="dropdown-item" href="#">Real-time strategy (RTS)</a>
-							<a class="dropdown-item" href="#">Shooters (FPS and TPS)</a>
-							<a class="dropdown-item" href="#">Multiplayer online battle arena (MOBA)</a>
-							<a class="dropdown-item" href="#">Role-playing (RPG, ARPG, and More)</a>
-							<a class="dropdown-item" href="#">Simulation and sports</a>
-							<a class="dropdown-item" href="#">Puzzlers and party games</a>
-							<a class="dropdown-item" href="#">Action-adventure</a>
-							<a class="dropdown-item" href="#">Survival and horror</a>
-							<a class="dropdown-item" href="#">Platformer</a>
+						<div class="dropdown-menu" id="category-dropdown">
 						</div>
 					</li>
 					<li class="nav-item">
@@ -106,41 +96,54 @@
 	<script src="/javascripts/bootstrap.bundle.min.js"></script>
 	<script src="/javascripts/prism.js" data-manual></script>
 	<script src="/javascripts/custom.js"></script>
-	<script>
+</body>
 
-		const buttons = document.getElementById('btn');
+<script>
+	// Display categories in the dropdown menu
+	$(document).ready(function () {
+		$.ajax({
+			url: '/api/categories/all',
+			type: 'GET',
+			success: function (data) {
+				$.each(data, function (index, value) {
+					$('#category-dropdown').append('<a class="dropdown-item" href="/shop?id=' + value.id + '">' + value.name + '</a>');
+				});
+			}
+		});
+	});
 
-		if (document.cookie) {
-			buttons.innerHTML =
-				`<ul class="navbar-nav me-auto">
+	const buttons = document.getElementById('btn');
+
+	if (document.cookie) {
+		buttons.innerHTML =
+			`<ul class="navbar-nav me-auto">
 				<li class="nav-item">
 					<a class="btn btn-secondary me-sm-2" href="/login">Disconnect</a>
 				</li>
 			</ul>
 			`;
-		};
+	};
 
-		const token = document.cookie.split('=')[1];
-		console.log(token);
-		fetch("/api/users/me", {
-			method: 'GET',
-			headers: {
-				'token': token
-			}
+	const token = document.cookie.split('=')[1];
+	console.log(token);
+	fetch("/api/users/me", {
+		method: 'GET',
+		headers: {
+			'token': token
+		}
+	})
+		.then(function (response) {
+			console.log(response);
+			return response.json();
 		})
-			.then(function (response) {
-				console.log(response);
-				return response.json();
-			})
-			.then(function (data) {
-				console.log(data);
-				const email = data['email'];
-				const username = data['username'];
+		.then(function (data) {
+			console.log(data);
+			const email = data['email'];
+			const username = data['username'];
 
-				document.getElementById('emailValue').innerHTML = email;
-				document.getElementById('usernameValue').innerHTML = username;
-			});
-	</script>
-</body>
+			document.getElementById('emailValue').innerHTML = email;
+			document.getElementById('usernameValue').innerHTML = username;
+		});
+</script>
 
 </html>

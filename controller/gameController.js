@@ -18,6 +18,26 @@ module.exports = {
 			});
 	},
 
+	// Games by gategory function
+	getGamesByCategory: function (req, res) {
+		// get params
+		const category = req.query.id;
+
+		const games = db.models.Game.findAll({
+			where: {
+				categoryId: category
+			}
+		}).then(function (games) {
+			if (games) {
+				res.status(201).json(games);
+			} else {
+				res.status(404).json({ 'error': 'no games were found' });
+			}
+		}).catch(function (err) {
+			res.status(500).json({ 'error': 'cannot fetch games' });
+		});
+	},
+
 	addGame: function (req, res) {
 
 		var name = req.body.name;

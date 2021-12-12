@@ -30,17 +30,7 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
                             aria-haspopup="true" aria-expanded="false">Categories</a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Sandbox</a>
-                            <a class="dropdown-item" href="#">Real-time strategy (RTS)</a>
-                            <a class="dropdown-item" href="#">Shooters (FPS and TPS)</a>
-                            <a class="dropdown-item" href="#">Multiplayer online battle arena (MOBA)</a>
-                            <a class="dropdown-item" href="#">Role-playing (RPG, ARPG, and More)</a>
-                            <a class="dropdown-item" href="#">Simulation and sports</a>
-                            <a class="dropdown-item" href="#">Puzzlers and party games</a>
-                            <a class="dropdown-item" href="#">Action-adventure</a>
-                            <a class="dropdown-item" href="#">Survival and horror</a>
-                            <a class="dropdown-item" href="#">Platformer</a>
+                        <div class="dropdown-menu" id="category-dropdown">
                         </div>
                     </li>
                     <li class="nav-item">
@@ -104,6 +94,19 @@
 
 </body>
 <script>
+    // Display categories in the dropdown menu
+    $(document).ready(function () {
+        $.ajax({
+            url: '/api/categories/all',
+            type: 'GET',
+            success: function (data) {
+                $.each(data, function (index, value) {
+                    $('#category-dropdown').append('<a class="dropdown-item" href="/shop?id=' + value.id + '">' + value.name + '</a>');
+                });
+            }
+        });
+    });
+
     const buttons = document.getElementById('btn');
 
     if (document.cookie) {
@@ -116,35 +119,93 @@
         `;
     };
 
-    
+
     const gameList = document.getElementById('game-list');
 
-    fetch("/api/games/all", {
-        method: 'GET'
-    })
-        .then(function (response) {
-            return response.json();
+    // Only show games from the category if it is defined
+    function $_GET(param) {
+        var vars = {};
+        window.location.href.replace(location.hash, '').replace(
+            /[?&]+([^=&]+)=?([^&]*)?/gi, // regexp
+            function (m, key, value) { // callback
+                vars[key] = value !== undefined ? value : '';
+            }
+        );
+
+        if (param) {
+            return vars[param] ? vars[param] : null;
+        }
+        return vars;
+    }
+
+    var id = $_GET('id');
+
+    if (id) {
+        fetch("/api/games/category?id=" + id, { method: "GET" })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (gameData) {
+                if (gameData.length > 0) {
+                    // Display the name of the category
+                    fetch("/api/categories/all", { method: "GET" })
+                        .then(function (response) {
+                            return response.json();
+                        })
+                        .then(function (categoryData) {
+                            const category = categoryData[gameData[0].CategoryId - 1].name;
+                            gameList.innerHTML +=
+                                `<div>
+                                    <h3>Games from category: ` + category + `</h3>
+                                </div>`;
+                        })
+                        .then(function () {
+                            // Display the games
+                            gameData.forEach(function (game) {
+                                console.log(game);
+                                gameList.innerHTML +=
+                                    `<div class="card border-primary mb-3 mx-3" style="width: 20rem;">
+                                <div class="card-body">
+                                    <h4 class="card-title">` + game['name'] + `</h4>
+                                    <p class="card-text">` + game['description'] + `</p>
+                                    <div class="d-flex justify-content-between">
+                                        <a href="#"class="btn btn-primary">View more</a>
+                                        <a href="#" class="btn btn-secondary">Add to my games</a>
+                                    </div>
+                                </div>
+                            </div>`;
+                            })
+                        });
+                }
+            });
+    }
+    else {
+        fetch("/api/games/all", {
+            method: 'GET'
         })
-        .then(function (data) {
-            if (data.length > 0) {
-                data.forEach(function (game) {
-                    gameid=game['id'];
-                    var loc = "/game?id="+gameid;
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+                if (data.length > 0) {
+                    data.forEach(function (game) {
+                        gameid = game['id'];
+                        var loc = "/game?id=" + gameid;
 
 
-                    //////fetch for the category/////////
-                    fetch("/api/categories/all", {
-                    method: 'GET'
-                    })
-                    .then(function (response) {
-                        return response.json();
-                    })
-                    .then(function (data) {
-                        if (data.length > 0) {
-                            data.forEach(function (cat) {
-                                if (game['CategoryId'] == cat['id']){
-                                    gameList.innerHTML +=
-                                        `<div class="card border-primary mb-3 mx-3" style="width: 20rem;">
+                        //////fetch for the category/////////
+                        fetch("/api/categories/all", {
+                            method: 'GET'
+                        })
+                            .then(function (response) {
+                                return response.json();
+                            })
+                            .then(function (data) {
+                                if (data.length > 0) {
+                                    data.forEach(function (cat) {
+                                        if (game['CategoryId'] == cat['id']) {
+                                            gameList.innerHTML +=
+                                                `<div class="card border-primary mb-3 mx-3" style="width: 20rem;">
                                             <div class="card-header" id ="category">` + cat['name'] + `</div>
                                                 <div class="card-body">
                                                     <h4 class="card-title">` + game['name'] + `</h4>
@@ -156,18 +217,14 @@
                                                 </div>
                                             </div>
                                         </div>`;
+                                        }
+                                    });
                                 }
                             });
-                        }
                     });
-
-                    ///////////////////////////////////
-
-                    
-                    
-                });
-            }
-        });
+                }
+            });
+    }
 
 </script>
 

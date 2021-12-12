@@ -17,8 +17,8 @@ exports.router = (function () {
     // Game routes
     apiRouter.route('/games/all').get(gameCtrl.getAllGames);
     apiRouter.route('/games/addgame').post(gameCtrl.addGame);
-    //gameCtrl.route('/games/category').get(gameCtrl.getGamesByCategory);
-    //gameCtrl.route('/games/user').get(gameCtrl.getGamesByUser);
+    apiRouter.route('/games/category').get(gameCtrl.getGamesByCategory);
+    //apiRouter.route('/games/user').get(gameCtrl.getGamesByUser);
 
     // Category routes
     apiRouter.route('/categories/all').get(categoryCtrl.getAllCategories);
