@@ -26,20 +26,13 @@
 					<li class="nav-item">
 						<a class="nav-link" href="/shop">Shop</a>
 					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/library">Library</a>
+					</li>
 					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
-							aria-haspopup="true" aria-expanded="false">Categories</a>
-						<div class="dropdown-menu">
-							<a class="dropdown-item" href="#">Sandbox</a>
-							<a class="dropdown-item" href="#">Real-time strategy (RTS)</a>
-							<a class="dropdown-item" href="#">Shooters (FPS and TPS)</a>
-							<a class="dropdown-item" href="#">Multiplayer online battle arena (MOBA)</a>
-							<a class="dropdown-item" href="#">Role-playing (RPG, ARPG, and More)</a>
-							<a class="dropdown-item" href="#">Simulation and sports</a>
-							<a class="dropdown-item" href="#">Puzzlers and party games</a>
-							<a class="dropdown-item" href="#">Action-adventure</a>
-							<a class="dropdown-item" href="#">Survival and horror</a>
-							<a class="dropdown-item" href="#">Platformer</a>
+						<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+							aria-expanded="false">Categories</a>
+						<div class="dropdown-menu" id="category-dropdown">
 						</div>
 					</li>
 					<li class="nav-item">
@@ -82,8 +75,7 @@
 					</ul>
 					<p>Made by <a href="https://github.com/Lechiffre4">Lechiffre4</a> and <a
 							href="https://github.com/Paracetamol56">Paracetamol56</a>.</p>
-					<p>Code released under the <a
-							href="https://github.com/Paracetamol56/OverSteam/blob/main/LICENSE">Apache
+					<p>Code released under the <a href="https://github.com/Paracetamol56/OverSteam/blob/main/LICENSE">Apache
 							License 2.0</a>.</p>
 					<p>Based on <a href="https://getbootstrap.com/" rel="nofollow">Bootstrap</a>. Icons from <a
 							href="https://fontawesome.com/" rel="nofollow">Font Awesome</a>. Web fonts from <a
@@ -97,5 +89,20 @@
 	<script type="javascript" src="/javascripts/jquery-3.6.0.min.js"></script>
 	<script type="javascript" src="/javascripts/bootstrap.bundle.min.js"></script>
 </body>
+
+<script>
+	// Display categories in the dropdown menu
+	$(document).ready(function () {
+		$.ajax({
+			url: '/api/categories/all',
+			type: 'GET',
+			success: function (data) {
+				$.each(data, function (index, value) {
+					$('#category-dropdown').append('<a class="dropdown-item" href="/shop?id=' + value.id + '">' + value.name + '</a>');
+				});
+			}
+		});
+	});
+</script>
 
 </html>
