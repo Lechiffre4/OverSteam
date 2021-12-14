@@ -8,4 +8,4 @@ var User_Game = db.define('User_Game', {
 
 });
 
-module.exports = UserGame;
+module.exports = User_Game;

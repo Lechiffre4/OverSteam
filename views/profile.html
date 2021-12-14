@@ -67,12 +67,24 @@
 				<div class="col-lg-12">
 					<h4>Email</h4>
 					<p id="emailValue"></p>
+				</div>
+				<div class="col-lg-12">
 					<h4>Username</h4>
 					<p id="usernameValue"></p>
-					<small><a href="./profile/modify">Update my profile</a></small>
+				</div>
+				<small><a href="./profile/modify">Update my profile</a></small>
+				
+			</div>
+			<div class="container">
+				<div class="bs-docs-section clearfix">
+					<div class="row">
+						<div class="page-header d-flex justify-content-between">
+							<h1>Created Games</h1>
+						</div>
+						<div class="d-flex flex-wrap justify-content-left" id="game-list">
+					</div>
 				</div>
 			</div>
-		</div>
 
 		<footer id="footer">
 			<div class="row">
@@ -127,14 +139,47 @@
 			`;
 	};
 
+
+	
+
 	const token = document.cookie.split('=')[1];
-	console.log(token);
+
+	const gameList = document.getElementById('game-list');		
+	fetch("/api/users/mygames", {
+		method: 'GET',
+		headers: {
+			'token': token
+		}
+		})
+		.then(function (response) {
+			console.log("le deuxieme fetch passe");
+			return response.json();
+		})
+		.then(function (data) {
+		    if (data.length > 0) {
+		        data.forEach(function (data) {
+					
+		                gameList.innerHTML +=
+		                    `<div class="card border-primary mb-3 mx-3" style="width: 20rem;">
+                                <div class="card-body">
+                                    <h4 class="card-title">` + data['name'] + `</h4>
+                                    <p class="card-text">` + data['description'] + `</p>
+                                    <div class="d-flex justify-content-between">
+                                    </div>
+                                </div>
+                            </div>`;
+		        });
+		    }
+		});
+
+
+
 	fetch("/api/users/me", {
 		method: 'GET',
 		headers: {
 			'token': token
 		}
-	})
+		})
 		.then(function (response) {
 			console.log(response);
 			return response.json();
@@ -146,7 +191,10 @@
 
 			document.getElementById('emailValue').innerHTML = email;
 			document.getElementById('usernameValue').innerHTML = username;
+
 		});
+
+
 </script>
 
 </html>

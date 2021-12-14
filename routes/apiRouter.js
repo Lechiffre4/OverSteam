@@ -13,6 +13,7 @@ exports.router = (function () {
     apiRouter.route('/users/login/').post(usersCtrl.login);
     apiRouter.route('/users/me/').get(usersCtrl.getUserProfile);
     apiRouter.route('/users/modify/').put(usersCtrl.updateUserProfile);
+    apiRouter.route('/users/mygames').get(usersCtrl.getMyGames);
 
     // Game routes
     apiRouter.route('/games/all').get(gameCtrl.getAllGames);

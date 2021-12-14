@@ -205,6 +205,28 @@ module.exports = {
         });
     },
 
+    getMyGames: function (req, res) {
+        // Getting auth header
+        var headerAuth = req.headers['token'];
+        var userId = jwtUtils.getUserId(headerAuth);
+        console.log(headerAuth)
+        console.log(userId)
 
+        if (userId < 0)
+            return res.status(400).json({ 'error': 'wrong token' });
+
+        db.models.Game.findAll({
+            attributes: ['UserId'],
+            where: { UserId: userId }
+        }).then(function (games) {
+            if (games) {
+                res.status(201).json(games);
+            } else {
+                res.status(404).json({ 'error': 'user not found' });
+            }
+        }).catch(function (err) {
+            res.status(500).json({ 'error': 'cannot fetch user' });
+        });
+    }
 
 }
