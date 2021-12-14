@@ -165,10 +165,11 @@
                                     <h4 class="card-title">` + data['name'] + `</h4>
                                     <p class="card-text">` + data['description'] + `</p>
                                     <div class="d-flex justify-content-between">
-									<a class="nav-link" href="/">Delete</a>
+									<a href="" nclass="nav-link" id="deletebtn">Delete</a>
                                     </div>
                                 </div>
                             </div>`;
+					
 		        });
 		    }
 		});
@@ -194,6 +195,14 @@
 			document.getElementById('usernameValue').innerHTML = username;
 
 		});
+
+		const buttonElement = document.getElementById('deletebtn');
+		buttonElement.addEventListener('click', function (event) {
+  		
+		});
+
+
+		
 
 
 </script>
