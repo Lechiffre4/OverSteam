@@ -71,39 +71,12 @@ module.exports = {
 				} else {
 					return res.status(409).json({ 'error': 'This game already exist' });
 				}
-			},
-			function (GameFound, done) {
-				console.log(name);
-				var newGame = db.models.Game.create({
-					name: name,
-					description: desc,
-					link: link,
-					CategoryId: category,
-					UserId: author,
-				})
-					.then(function (newGame) {
-						console.log("newGame");
-						done(newGame);
-					})
-					.catch(function (err) {
-						console.log(newGame);
-						return res.status(500).json({ 'error': 'Cannot add this game' });
-					});
 			}
-		], function (newGame) {
-			if (newGame) {
-				return res.status(201).json({
-					'game': newGame.id
-				});
-			} else {
-				return res.status(500).json({ 'error': 'Cannot add this game' });
-			}
-		});
+		]);
 	},
 
 
-	addtoMyGames: function (req, res) 
-	{
+	addtoMyGames: function (req, res) {
 		//var name = utils.getUserId(req.headers.authorization);
 		var name = req.body.userid;
 		var game = req.body.gameid;
@@ -111,8 +84,8 @@ module.exports = {
 		asyncLib.waterfall([
 			function (done) {
 				db.models.User_Game.findOne({
-					attributes: ['UserId','GameId'],
-					where: { UserId: name, GameId : game}
+					attributes: ['UserId', 'GameId'],
+					where: { UserId: name, GameId: game }
 				})
 					.then(function (GameFound) {
 						done(null, GameFound);
@@ -134,11 +107,9 @@ module.exports = {
 					UserId: name
 				})
 					.then(function (newGame) {
-						console.log("You have a new game");
 						done(newGame);
 					})
 					.catch(function (err) {
-						console.log(newGame);
 						return res.status(500).json({ 'error': 'Cannot add this game' });
 					});
 			}
@@ -153,6 +124,50 @@ module.exports = {
 			}
 		});
 
-	}
+	},
 
+	getGamesByUser: function (req, res) {
+		// get header
+		var user = utils.getUserId(req.headers.authorization);
+
+		asyncLib.waterfall([
+			function (done) {
+				db.models.User_Game.findAll({
+					attributes: ['GameId'],
+					where: { UserId: user }
+				})
+					.then(function (games) {
+						done(null, games);
+					})
+					.catch(function (err) {
+						return res.status(500).json({ 'error': 'Unable to verify game' });
+					});
+			},
+			function (games, done) {
+				if (games) {
+					done(null, games);
+				} else {
+					return res.status(404).json({ 'error': 'No games were found' });
+				}
+			},
+			function (games, done) {
+				var gameIds = [];
+				games.forEach(function (game) {
+					gameIds.push(game.GameId);
+				});
+				done(null, gameIds);
+			},
+			function (gameIds, done) {
+				db.models.Game.findAll({
+					where: { id: gameIds }
+				})
+					.then(function (games) {
+						done(null, games);
+					})
+					.catch(function (err) {
+						return res.status(500).json({ 'error': 'Unable to verify game' });
+					});
+			}
+		]);
+	}
 };
