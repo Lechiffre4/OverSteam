@@ -136,37 +136,61 @@ module.exports = {
 					attributes: ['GameId'],
 					where: { UserId: user }
 				})
-					.then(function (games) {
-						done(null, games);
+					.then(function (game) {
+						console.log('inside')
+						done(null, game);
 					})
 					.catch(function (err) {
-						return res.status(500).json({ 'error': 'Unable to verify game' });
+						console.log("err", err);
+						return res.status(500).json({ 'error': 'Unable to verify game 0' });
 					});
-			},
-			function (games, done) {
-				if (games) {
-					done(null, games);
-				} else {
-					return res.status(404).json({ 'error': 'No games were found' });
-				}
 			},
 			function (games, done) {
 				var gameIds = [];
 				games.forEach(function (game) {
-					gameIds.push(game.GameId);
+					gameIds.push(game.GameIds);
 				});
 				done(null, gameIds);
 			},
 			function (gameIds, done) {
-				db.models.Game.findAll({
-					where: { id: gameIds }
-				})
-					.then(function (games) {
-						done(null, games);
+				var games = [];
+				gameIds.forEach(function (gameId) {
+					db.models.Game.findOne({
+						where: { id: gameId }
+					}).then(function (game) {
+						// Get the game category
+						db.models.Category.findOne({
+							where: { id: game.CategoryId }
+						}).then(function (category) {
+							// Get the game author
+							db.models.User.findOne({
+								where: { id: game.UserId }
+							}).then(function (author) {
+								games.push({
+									id: game.id,
+									name: game.name,
+									description: game.description,
+									link: game.link,
+									category: category.name,
+									author: author.username
+								});
+							})
+								.catch(function (err) {
+									return res.status(500).json({ 'error': 'Unable to verify game 1' });
+								});
+						});
 					})
-					.catch(function (err) {
-						return res.status(500).json({ 'error': 'Unable to verify game' });
-					});
+						.catch(function (err) {
+							return res.status(500).json({ 'error': 'Unable to verify game 2' });
+						});
+				});
+				console.log(games);
+				done(null, games);
+			},
+			{
+				funnction(games, done) {
+					return res.status(200).json(games);
+				}
 			}
 		]);
 	},
