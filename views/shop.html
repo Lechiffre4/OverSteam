@@ -154,7 +154,7 @@
                         })
                         .then(function (categoryData) {
                             const category = categoryData[gameData[0].CategoryId - 1].name;
-                            gameList.innerHTML +=
+                            gameList.innerHTML =
                                 `<div>
                                     <h3>Games from category: ` + category + `</h3>
                                 </div>`;

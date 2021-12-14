@@ -99,5 +99,60 @@ module.exports = {
 				return res.status(500).json({ 'error': 'Cannot add this game' });
 			}
 		});
+	},
+
+
+	addtoMyGames: function (req, res) 
+	{
+		//var name = utils.getUserId(req.headers.authorization);
+		var name = req.body.userid;
+		var game = req.body.gameid;
+
+		asyncLib.waterfall([
+			function (done) {
+				db.models.User_Game.findOne({
+					attributes: ['UserId','GameId'],
+					where: { UserId: name, GameId : game}
+				})
+					.then(function (GameFound) {
+						done(null, GameFound);
+					})
+					.catch(function (err) {
+						return res.status(500).json({ 'error': 'Unable to verify game' });
+					});
+			},
+			function (GameFound, done) {
+				if (!GameFound) {
+					done(null, GameFound);
+				} else {
+					return res.status(409).json({ 'error': 'You already have this game' });
+				}
+			},
+			function (GameFound, done) {
+				var newGame = db.models.User_Game.create({
+					GameId: name,
+					UserId: game
+				})
+					.then(function (newGame) {
+						console.log("You have a new game");
+						done(newGame);
+					})
+					.catch(function (err) {
+						console.log(newGame);
+						return res.status(500).json({ 'error': 'Cannot add this game' });
+					});
+			}
+		], function (newGame) {
+			if (newGame) {
+				return res.status(201).json({
+					GameId: game,
+					UserId: name
+				});
+			} else {
+				return res.status(500).json({ 'error': 'Cannot add this game' });
+			}
+		});
+
 	}
+
 };
