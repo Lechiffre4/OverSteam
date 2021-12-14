@@ -130,8 +130,8 @@ module.exports = {
 			},
 			function (GameFound, done) {
 				var newGame = db.models.User_Game.create({
-					GameId: name,
-					UserId: game
+					GameId: game,
+					UserId: name
 				})
 					.then(function (newGame) {
 						console.log("You have a new game");
