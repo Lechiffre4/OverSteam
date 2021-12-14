@@ -42,7 +42,7 @@
 						<a class="nav-link" href="/about">About</a>
 					</li>
 				</ul>
-				<div class="d-flex">
+				<div class="d-flex" id="btn">
 					<ul class="navbar-nav me-auto">
 						<li class="nav-item">
 							<a class="btn btn-secondary me-sm-2" href="/login">Login</a>
@@ -157,8 +157,7 @@
 		})
 		.then(function (data) {
 		    if (data.length > 0) {
-		        data.forEach(function (data) {
-					
+		        data.forEach(function (data) { 
 		                gameList.innerHTML +=
 		                    `<div class="card border-primary mb-3 mx-3" style="width: 20rem;">
                                 <div class="card-body">
