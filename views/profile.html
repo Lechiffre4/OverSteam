@@ -158,12 +158,14 @@
 		.then(function (data) {
 		    if (data.length > 0) {
 		        data.forEach(function (data) { 
+					console.log(data)
 		                gameList.innerHTML +=
 		                    `<div class="card border-primary mb-3 mx-3" style="width: 20rem;">
                                 <div class="card-body">
                                     <h4 class="card-title">` + data['name'] + `</h4>
                                     <p class="card-text">` + data['description'] + `</p>
                                     <div class="d-flex justify-content-between">
+									<a class="nav-link" href="/">Delete</a>
                                     </div>
                                 </div>
                             </div>`;

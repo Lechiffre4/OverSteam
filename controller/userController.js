@@ -216,7 +216,7 @@ module.exports = {
             return res.status(400).json({ 'error': 'wrong token' });
 
         db.models.Game.findAll({
-            attributes: ['UserId'],
+            attributes: ['UserId','name','description'],
             where: { UserId: userId }
         }).then(function (games) {
             if (games) {
