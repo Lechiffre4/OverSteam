@@ -126,6 +126,56 @@ module.exports = {
 
 	},
 
+
+	addtoMyGames: function (req, res) {
+		//var name = utils.getUserId(req.headers.authorization);
+		var id= req.body.id;
+
+		var game = req.body.gameid;
+		asyncLib.waterfall([
+			function (done) {
+				db.models.Game.destroy({
+					where: { id: id}
+				})
+					.then(function (GameFound) {
+						done(null, GameFound);
+					})
+					.catch(function (err) {
+						return res.status(500).json({ 'error': 'Unable to verify game' });
+					});
+			},
+			function (GameFound, done) {
+				if (!GameFound) {
+					done(null, GameFound);
+				} else {
+					return res.status(409).json({ 'error': 'You already have this game' });
+				}
+			},
+			function (GameFound, done) {
+				var newGame = db.models.User_Game.create({
+					GameId: game,
+					UserId: name
+				})
+					.then(function (newGame) {
+						done(newGame);
+					})
+					.catch(function (err) {
+						return res.status(500).json({ 'error': 'Cannot add this game' });
+					});
+			}
+		], function (newGame) {
+			if (newGame) {
+				return res.status(201).json({
+					GameId: game,
+					UserId: name
+				});
+			} else {
+				return res.status(500).json({ 'error': 'Cannot add this game' });
+			}
+		});
+
+	},
+
 	getGamesByUser: function (req, res) {
 		// get header
 		var user = utils.getUserId(req.headers.authorization);
@@ -196,4 +246,5 @@ module.exports = {
 			console.log('nique', err)
 		});
 	},
+	
 };

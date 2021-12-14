@@ -139,10 +139,31 @@
 			`;
 	};
 
-
 	
 
 	const token = document.cookie.split('=')[1];
+
+
+	fetch("/api/users/me", {
+		method: 'GET',
+		headers: {
+			'token': token
+		}
+		})
+		.then(function (response) {
+			console.log(response);
+			return response.json();
+		})
+		.then(function (data) {
+			console.log(data);
+			const email = data['email'];
+			const username = data['username'];
+
+			document.getElementById('emailValue').innerHTML = email;
+			document.getElementById('usernameValue').innerHTML = username;
+
+		});
+
 
 	const gameList = document.getElementById('game-list');		
 	fetch("/api/users/mygames", {
@@ -165,11 +186,9 @@
                                     <h4 class="card-title">` + data['name'] + `</h4>
                                     <p class="card-text">` + data['description'] + `</p>
                                     <div class="d-flex justify-content-between">
-									<a href="" nclass="nav-link" id="deletebtn">Delete</a>
                                     </div>
                                 </div>
                             </div>`;
-					
 		        });
 		    }
 		});
@@ -194,11 +213,6 @@
 			document.getElementById('emailValue').innerHTML = email;
 			document.getElementById('usernameValue').innerHTML = username;
 
-		});
-
-		const buttonElement = document.getElementById('deletebtn');
-		buttonElement.addEventListener('click', function (event) {
-  		
 		});
 
 
