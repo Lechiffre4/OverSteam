@@ -140,19 +140,68 @@ module.exports = {
 	// Profile function
 	getUserProfile: function (req, res) {
 		// Getting auth header
-		var headerAuth = req.headers['token'];
+		var headerAuth = req.headers['authorization'];
 		var userId = jwtUtils.getUserId(headerAuth);
 
-		if (userId < 0)
+		if (userId < 0) {
 			return res.status(400).json({ 'error': 'wrong token' });
+		}
 
 		db.models.User.findOne({
 			attributes: ['id', 'email', 'username', 'isAdmin'],
 			where: { id: userId }
 		}).then(function (user) {
 			if (user) {
-				res.status(201).json(user);
-			} else {
+				// get user's games
+				var games = [];
+
+				db.models.Game.findAll({
+					attributes: ['id', 'name', 'description', 'link', 'UserId', 'CategoryId'],
+					where: { UserId: user.id }
+				}).then(function (rawGgames) {
+					if (rawGgames.length == 0) {
+						return res.status(201).json({ 'games': [] });
+					}
+					rawGgames.forEach(function (currentGame) {
+						//get game
+						var game = {
+							id: currentGame.dataValues.id,
+							name: currentGame.dataValues.name,
+							description: currentGame.dataValues.description,
+							link: currentGame.dataValues.link,
+							category: currentGame.dataValues.CategoryId,
+							author: currentGame.dataValues.UserId,
+						}
+						// replace categoryId with category name
+						db.models.Category.findOne({
+							where: { id: game.category }
+						})
+							.then(function (category) {
+								game.category = category.dataValues.name;
+								// Replace authorId with author name
+								db.models.User.findOne({
+									where: { id: game.author }
+								})
+									.then(function (author) {
+										game.author = author.dataValues.username;
+										games.push(game);
+										if (games.length == rawGgames.length) {
+											return res.status(201).json({ user: user, games: games });
+										}
+									})
+									.catch(function (err) {
+										return res.status(500).json({ 'error': 'Unable to fetch author' });
+									});
+							})
+							.catch(function (err) {
+								return res.status(500).json({ 'error': 'cannot fetch category' });
+							});
+					})
+				}).catch(function (err) {
+					res.status(500).json({ 'error': 'cannot fetch user' });
+				});
+			}
+			else {
 				res.status(404).json({ 'error': 'user not found' });
 			}
 		}).catch(function (err) {
@@ -202,63 +251,6 @@ module.exports = {
 			} else {
 				return res.status(500).json({ 'error': 'cannot update user profile' });
 			}
-		});
-	},
-
-	getMyGames: function (req, res) {
-		// Getting auth header
-		var headerAuth = req.headers['authorization'];
-		var user = jwtUtils.getUserId(headerAuth);
-
-		if (user < 0)
-			return res.status(400).json({ 'error': 'wrong token' });
-
-		var games = [];
-
-		db.models.Game.findAll({
-			attributes: ['id', 'name', 'description', 'link', 'UserId', 'CategoryId'],
-			where: { UserId: user }
-		}).then(function (rawGgames) {
-			if (rawGgames.length == 0) {
-				return res.status(201).json({ 'games': [] });
-			}
-			rawGgames.forEach(function (currentGame) {
-				//get game
-				var game = {
-					id: currentGame.dataValues.id,
-					name: currentGame.dataValues.name,
-					description: currentGame.dataValues.description,
-					link: currentGame.dataValues.link,
-					category: currentGame.dataValues.CategoryId,
-					author: currentGame.dataValues.UserId,
-				}
-				// replace categoryId with category name
-				db.models.Category.findOne({
-					where: { id: game.category }
-				})
-					.then(function (category) {
-						game.category = category.dataValues.name;
-						// Replace authorId with author name
-						db.models.User.findOne({
-							where: { id: game.author }
-						})
-							.then(function (author) {
-								game.author = author.dataValues.username;
-								games.push(game);
-								if (games.length == rawGgames.length) {
-									return res.status(201).json(games);
-								}
-							})
-							.catch(function (err) {
-								return res.status(500).json({ 'error': 'Unable to fetch author' });
-							});
-					})
-					.catch(function (err) {
-						return res.status(500).json({ 'error': 'cannot fetch category' });
-					});
-			})
-		}).catch(function (err) {
-			res.status(500).json({ 'error': 'cannot fetch user' });
 		});
 	},
 

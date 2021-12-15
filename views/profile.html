@@ -138,38 +138,20 @@
 			`;
 	};
 
-
-
 	const token = document.cookie.split('=')[1];
 
-
-	fetch("/api/users/me", {
-		method: 'GET',
-		headers: {
-			'token': token
-		}
-	})
-		.then(function (response) {
-			return response.json();
-		})
-		.then(function (data) {
-			console.log(data);
-			const email = data['email'];
-			const username = data['username'];
-
-			document.getElementById('emailValue').innerHTML = email;
-			document.getElementById('usernameValue').innerHTML = username;
-
-		});
-
 	$.ajax({
-		url: '/api/users/mygames',
-		type: 'GET',
+		url: '/api/users/me',
 		headers: {
 			'authorization': token
 		},
+		type: 'GET',
 		success: function (data) {
-			$.each(data, function (index, value) {
+			console.log(data);
+			document.getElementById('emailValue').innerHTML = data.user.email;
+			document.getElementById('usernameValue').innerHTML = data.user.username;
+
+			$.each(data.games, function (index, value) {
 				$('#game-list').append(
 					`<div class="card border-primary mb-3 mx-3" style="width: 20rem;">
                 <div class="card-header" id ="category">${value.category}</div>
@@ -184,7 +166,7 @@
           </div>`);
 			});
 		}
-	});
+	})
 
 	function DeleteGame(id) {
 		console.log(id);
@@ -207,31 +189,6 @@
 
 		window.location.reload();
 	}
-
-	fetch("/api/users/me", {
-		method: 'GET',
-		headers: {
-			'token': token
-		}
-	})
-		.then(function (response) {
-			console.log(response);
-			return response.json();
-		})
-		.then(function (data) {
-			console.log(data);
-			const email = data['email'];
-			const username = data['username'];
-
-			document.getElementById('emailValue').innerHTML = email;
-			document.getElementById('usernameValue').innerHTML = username;
-
-		});
-
-
-
-
-
 </script>
 
 </html>
