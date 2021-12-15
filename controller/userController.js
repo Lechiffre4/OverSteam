@@ -227,6 +227,69 @@ module.exports = {
         }).catch(function (err) {
             res.status(500).json({ 'error': 'cannot fetch user' });
         });
+    },
+
+    deletemyGame: function (req, res) {
+        
+        idgame = req.body.id
+
+        var headerAuth = req.body.token;
+        console.log(headerAuth)
+        var userId = jwtUtils.getUserId(headerAuth);
+        console.log(userId)
+
+        if (userId < 0)
+            return res.status(400).json({ 'error': 'wrong token' });
+
+        db.models.User.findOne({
+            attributes: ['id'],
+            where: { id: userId }
+        })
+        .then(function (user) {
+            if (user) {
+                db.models.Game.findOne({
+                    attributes: ['UserId'],
+                    where: { id: idgame }
+                })
+                .then(function (creator)
+                {
+                    if(user.id == creator.UserId)
+                    {
+                        //delete
+                        db.models.Game.destroy({
+                            attributes: ['UserId'],
+                                where: {
+                                    id: idgame
+                                }
+                            })
+                        .then(function (result) {
+                                res.status(201).json("Deleted");    
+                        })
+                        .catch(function (err) {
+                            res.status(500).json({ 'error': 'cannot delete game' });
+                        });
+
+
+
+                    }
+                    else {
+                        res.status(500).json({ 'error': 'thats not your game' });
+                    }
+                })
+            } else {
+                res.status(404).json({ 'error': 'user not found' });
+            }
+        }).catch(function (err) {
+            res.status(500).json({ 'error': 'cannot fetch user' });
+        });
+
+
+
+        
+
+        
     }
+
+    
 
 }

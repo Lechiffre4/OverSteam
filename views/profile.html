@@ -151,7 +151,6 @@
 		}
 		})
 		.then(function (response) {
-			console.log(response);
 			return response.json();
 		})
 		.then(function (data) {
@@ -186,6 +185,7 @@
                                     <h4 class="card-title">` + data['name'] + `</h4>
                                     <p class="card-text">` + data['description'] + `</p>
                                     <div class="d-flex justify-content-between">
+									<button class="btn btn-secondary me-sm-2" type="button" onClick="DeleteGame(`+data['id']+`)">Delete</button>
                                     </div>
                                 </div>
                             </div>`;
@@ -193,8 +193,25 @@
 		    }
 		});
 
+		function DeleteGame(id)
+		{
 
-
+			fetch("/api/users/deletemygame", {
+				method: 'POST',
+				body: 
+				{
+					id : id,
+					token: token
+				}
+				})
+				.then(function (response) {
+					console.log(response);
+					return response.json	
+				})
+			
+		
+		}
+		
 	fetch("/api/users/me", {
 		method: 'GET',
 		headers: {
