@@ -176,51 +176,46 @@ module.exports = {
 	},
 
 	addtoMyGames: function (req, res) {
-		//var name = utils.getUserId(req.headers.authorization);
-		var id = req.body.id;
+		idgame = req.body.id
 
-		var game = req.body.gameid;
-		asyncLib.waterfall([
-			function (done) {
-				db.models.Game.destroy({
-					where: { id: id }
-				})
-					.then(function (GameFound) {
-						done(null, GameFound);
-					})
-					.catch(function (err) {
-						return res.status(500).json({ 'error': 'Unable to verify game' });
-					});
-			},
-			function (GameFound, done) {
-				if (!GameFound) {
-					done(null, GameFound);
-				} else {
-					return res.status(409).json({ 'error': 'You already have this game' });
-				}
-			},
-			function (GameFound, done) {
-				var newGame = db.models.User_Game.create({
-					GameId: game,
-					UserId: name
-				})
-					.then(function (newGame) {
-						done(newGame);
-					})
-					.catch(function (err) {
-						return res.status(500).json({ 'error': 'Cannot add this game' });
-					});
-			}
-		], function (newGame) {
-			if (newGame) {
-				return res.status(201).json({
-					GameId: game,
-					UserId: name
-				});
-			} else {
-				return res.status(500).json({ 'error': 'Cannot add this game' });
-			}
-		});
+        var headerAuth = req.body.token;
+        console.log(headerAuth)
+        var userId = utils.getUserId(headerAuth);
+        console.log(userId)
+
+        if (userId < 0)
+            return res.status(400).json({ 'error': 'wrong token' });
+
+        db.models.User.findOne({
+            attributes: ['id'],
+            where: { id: userId }
+        })
+		.then(function (user) {
+            if (user) {
+                db.models.Game.findOne({
+                    attributes: ['id'],
+                    where: { id: idgame }
+                })
+                .then(function (creator)
+                {
+                    db.models.User_Game.create({
+                        GameId: creator.id,
+						UserId: user.id
+                        })
+                    .then(function (result) {
+                            res.status(201).json("Added");    
+                    })
+                    .catch(function (err) {
+                        res.status(500).json({ 'error': 'cannot add this game' });
+                    });
+                })
+            } else {
+                res.status(404).json({ 'error': 'user not found' });
+            }
+        }).catch(function (err) {
+            res.status(500).json({ 'error': 'cannot fetch user' });
+        });
+
 
 	},
 
