@@ -283,5 +283,36 @@ module.exports = {
 			.catch(function (err) {
 				return res.status(500).json({ 'error': 'Unable to fetch games' });
 			});
+	},
+
+
+
+	DeleteGameLib: function (req, res) {
+
+		idgame = req.body.id
+		var headerAuth = req.body.token;
+		console.log(headerAuth)
+		var userId = utils.getUserId(headerAuth);
+		
+
+		if (userId < 0)
+			return res.status(400).json({ 'error': 'wrong token' });
+
+		
+		db.models.User_Game.destroy({
+			where: {
+				UserId: userId,
+				GameId: idgame
+			}
+		})
+			.then(function (result) {
+				res.status(201).json("Deleted");
+			})
+			.catch(function (err) {
+				res.status(500).json({ 'error': 'cannot delete game' });
+			});
+
+
+
 	}
 };
