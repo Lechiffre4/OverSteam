@@ -8,6 +8,9 @@ var categoryCtrl = require('../controller/categoryController');
 exports.router = (function () {
     var apiRouter = express.Router();
 
+    // Home route
+    apiRouter.route('/').get(function (req, res) { return res.status(201).json({ message: 'Welcome to Oversteam API' }); });
+
     // Users routes
     apiRouter.route('/users/register/').post(usersCtrl.register);
     apiRouter.route('/users/login/').post(usersCtrl.login);

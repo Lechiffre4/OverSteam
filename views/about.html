@@ -19,9 +19,7 @@
 			<div class="collapse navbar-collapse" id="navbarColor01">
 				<ul class="navbar-nav me-auto">
 					<li class="nav-item">
-						<a class="nav-link" href="/">Home
-							<span class="visually-hidden">(current)</span>
-						</a>
+						<a class="nav-link" href="/">Home</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="/shop">Shop</a>
@@ -39,7 +37,7 @@
 						<a class="nav-link" href="/profile">Profile</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="/about">About</a>
+						<a class="nav-link active" href="/about">About</a>
 					</li>
 				</ul>
 				<div class="d-flex" id="btn">
@@ -58,14 +56,17 @@
 
 	<div class="container">
 
-		<div class="bs-docs-section clearfix" id="api">
+		<div class="bs-docs-section clearfix" id="help">
 			<h2>Help</h2>
 			<p>Don't think I'm going to write a fuckin 'help page and beg for a little.</p>
 		</div>
 
 		<div class="bs-docs-section clearfix" id="api">
 			<h2>API</h2>
-			<h3>Register request</h3>
+			<p>Our API is free and open, you can start using it now with this link and the route of your choice :</p>
+			<p><a href="https://oversteam.feet.best/api/">https://oversteam.herokuapp.com/api/</a></p>
+			<h3>User API</h3>
+			<h4>Register request</h4>
 			<p>Used to create a new user with <code>POST</code> method.</p>
 			<p>Path: <code>/users/register/</code></p>
 			<p>JSON example:
@@ -74,7 +75,7 @@
     password: password,
 }</code></pre>
 			</p>
-			<h3>Login request</h3>
+			<h4>Login request</h4>
 			<p>Used to log a user in with <code>POST</code> method.</p>
 			<p>Path: <code>/users/login/</code></p>
 			<p>JSON example:
@@ -85,6 +86,68 @@
     passwordVerif: passwordVerif
 }</code></pre>
 			</p>
+			<h4>Profile request</h4>
+			<p>Used to get user informations such as profile and games with <code>POST</code> method.</p>
+			<p>Path: <code>/users/me/</code></p>
+			<p>A valid connection token is required in headers.</p>
+
+			<h4>Profile modification request</h4>
+			<p>Used to modify user informations with <code>PUT</code> method.</p>
+			<p>Path: <code>/users/modify/</code></p>
+			<p>A valid connection token is required in headers.</p>
+
+			<h4>Profile modification request</h4>
+			<p>Used to modify user informations with <code>POST</code> method.</p>
+			<p>Path: <code>/users/deletemygame</code></p>
+			<p>A valid connection token is required in headers and a game id in the URI.</p>
+
+			<h3>Game API</h3>
+			<h4>Game addition request</h4>
+			<p>Used to add a game in the database with <code>POST</code> method.</p>
+			<p>Path: <code>/games/addgame</code></p>
+			<p>JSON example:
+			<pre><code>{
+    name: name,
+    description: desc,
+    author: token,
+    category: category,
+    link: link
+}</code></pre>
+			<p>A valid connection token is required in headers</p>
+
+			<h4>All games request</h4>
+			<p>Used to get all games with <code>GET</code> method.</p>
+			<p>Path: <code>/games/all</code></p>
+
+			<h4>Game by id request</h4>
+			<p>Used to get a unique game by the specified id with <code>GET</code> method.</p>
+			<p>Path: <code>/games/id</code></p>
+			<p>A game id is required in the URI.</p>
+
+			<h4>Game by category request</h4>
+			<p>Used to get all games having the specified gategory with <code>GET</code> method.</p>
+			<p>Path: <code>/games/category</code></p>
+			<p>A category id is required in the URI.</p>
+
+			<h4>Game by user request</h4>
+			<p>Used to get all games saved by the specified user with <code>GET</code> method.</p>
+			<p>Path: <code>/games/user</code></p>
+			<p>A valid connection token is required in headers.</p>
+
+			<h4>Game addition in the user library request</h4>
+			<p>Used to get a game to the user library with <code>POST</code> method.</p>
+			<p>Path: <code>/games/addtomygames</code></p>
+			<p>A category id is required in the URI.</p>
+
+			<h4>Game deletion request</h4>
+			<p>Used to remove a game from the database with <code>POST</code> method.</p>
+			<p>Path: <code>/games/remove</code></p>
+			<p>A category id is required in the URI.</p>
+
+			<h3>Category API</h3>
+			<h4>All categories request</h4>
+			<p>Used to get all the categories with <code>GET</code> method.</p>
+			<p>Path: <code>/categories/all</code></p>
 		</div>
 
 		<div class="bs-docs-section clearfix" id="donate">
