@@ -144,7 +144,7 @@
     var id = $_GET('id');
 
 
-    fetch("http://localhost:3000/api/games/all", {
+    fetch("/api/games/all", {
         method: 'GET'
     })
         .then(function (response) {
