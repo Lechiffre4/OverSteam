@@ -195,21 +195,25 @@
 
 		function DeleteGame(id)
 		{
+			console.log(id);
+			console.log(token)
 
 			fetch("/api/users/deletemygame", {
 				method: 'POST',
-				body: 
-				{
-					id : id,
+				headers: {
+					"Content-Type": "application/json; charset=UTF-8"
+				},
+				body: JSON.stringify({
+					id: id,
 					token: token
-				}
+			})
 				})
 				.then(function (response) {
 					console.log(response);
-					return response.json	
+					return response.json();	
 				})
 			
-		
+			window.location.reload();
 		}
 		
 	fetch("/api/users/me", {

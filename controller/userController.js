@@ -283,11 +283,6 @@ module.exports = {
             res.status(500).json({ 'error': 'cannot fetch user' });
         });
 
-
-
-        
-
-        
     }
 
     

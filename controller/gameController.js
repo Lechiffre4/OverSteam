@@ -91,7 +91,7 @@ module.exports = {
                     });
             }
         ], function (newGame) {
-if (newGame) {
+		if (newGame) {
                 return res.status(201).json({
                     'game': newGame.id
                 });
