@@ -269,8 +269,6 @@ module.exports = {
                             res.status(500).json({ 'error': 'cannot delete game' });
                         });
 
-
-
                     }
                     else {
                         res.status(500).json({ 'error': 'thats not your game' });
