@@ -6,15 +6,55 @@ const utils = require('../utils');
 module.exports = {
 	// All games function
 	getAllGames: function (req, res) {
-		const games = db.models.Game.findAll()
-			.then(function (games) {
-				if (games) {
-					res.status(201).json(games);
-				} else {
-					res.status(404).json({ 'error': 'no games were found' });
+		var games = [];
+
+		db.models.Game.findAll({
+			attributes: ['id', 'name', 'description', 'link', 'UserId', 'CategoryId'],
+		})
+			.then(function (rawGgames) {
+				if (rawGgames.length == 0) {
+					return res.status(201).json({ 'games': [] });
 				}
-			}).catch(function (err) {
-				res.status(500).json({ 'error': 'cannot fetch games' });
+				rawGgames.forEach(function (currentGame) {
+					//get game
+					var game = {
+						id: currentGame.dataValues.id,
+						name: currentGame.dataValues.name,
+						description: currentGame.dataValues.description,
+						link: currentGame.dataValues.link,
+						category: currentGame.dataValues.CategoryId,
+						author: currentGame.dataValues.UserId,
+					}
+					// replace categoryId with category name
+					db.models.Category.findOne({
+						where: { id: game.category }
+					})
+						.then(function (category) {
+							console.log("category: " + category.dataValues.name);
+							game.category = category.dataValues.name;
+							// Replace authorId with author name
+							db.models.User.findOne({
+								where: { id: game.author }
+							})
+								.then(function (author) {
+									console.log("author: " + author.dataValues.username);
+									game.author = author.dataValues.username;
+									games.push(game);
+									if (games.length == rawGgames.length) {
+										return res.status(201).json(games);
+									}
+								})
+								.catch(function (err) {
+									return res.status(500).json({ 'error': 'Unable to fetch author' });
+								});
+						})
+						.catch(function (err) {
+							return res.status(500).json({ 'error': 'cannot fetch category' });
+						});
+				})
+			})
+			.catch(function (err) {
+				return res.status(500).json({ 'error': 'Unable to fetch games' });
 			});
 	},
 
@@ -155,7 +195,6 @@ module.exports = {
 		var user = utils.getUserId(req.headers.authorization);
 
 		var games = [];
-		var count = 0;
 
 		db.models.User_Game.findAll({
 			attributes: ['GameId'],
@@ -192,8 +231,7 @@ module.exports = {
 										.then(function (author) {
 											game.author = author.dataValues.username;
 											games.push(game);
-											count++;
-											if (count == gameIds.length) {
+											if (games.length == gameIds.length) {
 												return res.status(201).json(games);
 											}
 										})
@@ -208,8 +246,7 @@ module.exports = {
 						.catch(function (err) {
 							return res.status(500).json({ 'error': 'Unable to verify game' });
 						});
-				}
-				);
+				});
 			})
 			.catch(function (err) {
 				return res.status(500).json({ 'error': 'Unable to fetch games' });
