@@ -93,14 +93,19 @@ router.get('/addgame', CookieExist, function (req, res, next) {
     res.render('addgame');
 });
 
-/* GET add game page. */
+/* GET my games page. */
 router.get('/mygames', CookieExist, function (req, res, next) {
     res.render('mygames');
 });
 
-/* GET add game page. */
+/* GET game page. */
 router.get('/game', function (req, res, next) {
     res.render('game');
+});
+
+/* GET library page. */
+router.get('/library', CookieExist, function (req, res, next) {
+    res.render('library');
 });
 
 
