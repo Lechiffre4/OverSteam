@@ -228,6 +228,9 @@ module.exports = {
 		// get header
 		var user = utils.getUserId(req.headers.authorization);
 
+		if (user < 0)
+			return res.status(400).json({ 'error': 'wrong token' });
+
 		var games = [];
 
 		db.models.User_Game.findAll({

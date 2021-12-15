@@ -30,8 +30,8 @@
 						<a class="nav-link" href="/library">Library</a>
 					</li>
 					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
-							aria-haspopup="true" aria-expanded="false">Categories</a>
+						<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+							aria-expanded="false">Categories</a>
 						<div class="dropdown-menu" id="category-dropdown">
 						</div>
 					</li>
@@ -62,7 +62,6 @@
 			<div class="row">
 				<div class="page-header d-flex justify-content-between">
 					<h1>Profile</h1>
-					<a class="btn btn-outline-secondary my-auto" href="../mygames">My Games</a>
 				</div>
 				<div class="col-lg-12">
 					<h4>Email</h4>
@@ -97,8 +96,7 @@
 							</ul>
 							<p>Made by <a href="https://github.com/Lechiffre4">Lechiffre4</a> and <a
 									href="https://github.com/Paracetamol56">Paracetamol56</a>.</p>
-							<p>Code released under the <a
-									href="https://github.com/Paracetamol56/OverSteam/blob/main/LICENSE">Apache
+							<p>Code released under the <a href="https://github.com/Paracetamol56/OverSteam/blob/main/LICENSE">Apache
 									License 2.0</a>.</p>
 							<p>Based on <a href="https://getbootstrap.com/" rel="nofollow">Bootstrap</a>. Icons from <a
 									href="https://fontawesome.com/" rel="nofollow">Font Awesome</a>. Web fonts from <a
@@ -164,35 +162,29 @@
 
 		});
 
-
-	const gameList = document.getElementById('game-list');
-	fetch("/api/users/mygames", {
-		method: 'GET',
+	$.ajax({
+		url: '/api/users/mygames',
+		type: 'GET',
 		headers: {
-			'token': token
+			'authorization': token
+		},
+		success: function (data) {
+			$.each(data, function (index, value) {
+				$('#game-list').append(
+					`<div class="card border-primary mb-3 mx-3" style="width: 20rem;">
+                <div class="card-header" id ="category">${value.category}</div>
+                <div class="card-body">
+                    <h4 class="card-title">${value.name}</h4>
+                    <p class="card-text">${value.description}</p>
+                    <div class="d-flex justify-content-between">
+											<button class="btn btn-secondary me-sm-2" type="button" onClick="DeleteGame(${value.id})">Delete</button>
+                    </div>
+                </div>
+            </div>
+          </div>`);
+			});
 		}
-	})
-		.then(function (response) {
-			console.log("le deuxieme fetch passe");
-			return response.json();
-		})
-		.then(function (data) {
-			if (data.length > 0) {
-				data.forEach(function (data) {
-					console.log(data)
-					gameList.innerHTML +=
-						`<div class="card border-primary mb-3 mx-3" style="width: 20rem;">
-                                <div class="card-body">
-                                    <h4 class="card-title">` + data['name'] + `</h4>
-                                    <p class="card-text">` + data['description'] + `</p>
-                                    <div class="d-flex justify-content-between">
-									<button class="btn btn-secondary me-sm-2" type="button" onClick="DeleteGame(`+ data['id'] + `)">Delete</button>
-                                    </div>
-                                </div>
-                            </div>`;
-				});
-			}
-		});
+	});
 
 	function DeleteGame(id) {
 		console.log(id);
