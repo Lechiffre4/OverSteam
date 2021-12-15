@@ -56,6 +56,51 @@ module.exports = {
 			});
 	},
 
+	getGameById: function (req, res) {
+		// get params
+		const gameId = req.query.id;
+
+		db.models.Game.findOne({
+			attributes: ['id', 'name', 'description', 'link', 'UserId', 'CategoryId'],
+			where: { id: gameId }
+		})
+			.then(function (rawGame) {
+				var game = {
+					id: rawGame.dataValues.id,
+					name: rawGame.dataValues.name,
+					description: rawGame.dataValues.description,
+					link: rawGame.dataValues.link,
+					category: rawGame.dataValues.CategoryId,
+					author: rawGame.dataValues.UserId,
+				}
+				// replace categoryId with category name
+				db.models.Category.findOne({
+					where: { id: game.category }
+				})
+					.then(function (category) {
+						game.category = category.dataValues.name;
+						// Replace authorId with author name
+						db.models.User.findOne({
+							where: { id: game.author }
+						})
+							.then(function (author) {
+								game.author = author.dataValues.username;
+								return res.status(201).json(game);
+							})
+							.catch(function (err) {
+								return res.status(500).json({ 'error': 'Unable to fetch author' });
+							});
+					})
+					.catch(function (err) {
+						return res.status(500).json({ 'error': 'cannot fetch category' });
+					});
+			})
+			.catch(function (err) {
+				console.log(err);
+				return res.status(500).json({ 'error': 'Unable to fetch game' });
+			})
+	},
+
 	// Games by gategory function
 	getGamesByCategory: function (req, res) {
 		// get params
@@ -112,6 +157,7 @@ module.exports = {
 			});
 	},
 
+	// Game insertion function
 	addGame: function (req, res) {
 
 		var name = req.body.name;
@@ -175,50 +221,51 @@ module.exports = {
 		});
 	},
 
+	// Game addition in user library function
 	addtoMyGames: function (req, res) {
 		idgame = req.body.id
 
-        var headerAuth = req.body.token;
-        console.log(headerAuth)
-        var userId = utils.getUserId(headerAuth);
-        console.log(userId)
+		var headerAuth = req.body.token;
+		console.log(headerAuth)
+		var userId = utils.getUserId(headerAuth);
+		console.log(userId)
 
-        if (userId < 0)
-            return res.status(400).json({ 'error': 'wrong token' });
+		if (userId < 0)
+			return res.status(400).json({ 'error': 'wrong token' });
 
-        db.models.User.findOne({
-            attributes: ['id'],
-            where: { id: userId }
-        })
-		.then(function (user) {
-            if (user) {
-                db.models.Game.findOne({
-                    attributes: ['id'],
-                    where: { id: idgame }
-                })
-                .then(function (creator)
-                {
-                    db.models.User_Game.create({
-                        GameId: creator.id,
-						UserId: user.id
-                        })
-                    .then(function (result) {
-                            res.status(201).json("Added");    
-                    })
-                    .catch(function (err) {
-                        res.status(500).json({ 'error': 'cannot add this game' });
-                    });
-                })
-            } else {
-                res.status(404).json({ 'error': 'user not found' });
-            }
-        }).catch(function (err) {
-            res.status(500).json({ 'error': 'cannot fetch user' });
-        });
+		db.models.User.findOne({
+			attributes: ['id'],
+			where: { id: userId }
+		})
+			.then(function (user) {
+				if (user) {
+					db.models.Game.findOne({
+						attributes: ['id'],
+						where: { id: idgame }
+					})
+						.then(function (creator) {
+							db.models.User_Game.create({
+								GameId: creator.id,
+								UserId: user.id
+							})
+								.then(function (result) {
+									res.status(201).json("Added");
+								})
+								.catch(function (err) {
+									res.status(500).json({ 'error': 'cannot add this game' });
+								});
+						})
+				} else {
+					res.status(404).json({ 'error': 'user not found' });
+				}
+			}).catch(function (err) {
+				res.status(500).json({ 'error': 'cannot fetch user' });
+			});
 
 
 	},
 
+	// Game by user function
 	getGamesByUser: function (req, res) {
 		// get header
 		var user = utils.getUserId(req.headers.authorization);

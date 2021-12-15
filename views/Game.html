@@ -61,37 +61,37 @@
         <div class="bs-docs-section clearfix">
             <div class="row">
                 <div class="page-header d-flex justify-content-between" id="name">
-                    <h1>Name of the game</h1>
+                    <h1 id="game-name"></h1>
                     <a class="btn btn-outline-secondary my-auto" href="../shop">Shop</a>
                 </div>
-                <div id="text">
-                    <h3>Category</h3>
-                    <p>Description</p>
-                    <p>https://paypal.me/sahelh</p>
+                <div>
+                    <h3 id="game-category"></h3>
+                    <p id="game-description"></p>
+                    <a id="game-link">Website</a>
                 </div>
             </div>
         </div>
-    </div>
 
-    <footer id="footer">
-        <div class="row">
-            <div class="col-lg-12">
-                <ul class="list-unstyled">
-                    <li class="float-end"><a href="#top">Back to top</a></li>
-                    <li><a href="https://github.com/Paracetamol56/OverSteam">GitHub</a></li>
-                    <li><a href="../about/#api">API</a></li>
-                    <li><a href="../about/#donate">Donate</a></li>
-                </ul>
-                <p>Made by <a href="https://github.com/Lechiffre4">Lechiffre4</a> and <a
-                        href="https://github.com/Paracetamol56">Paracetamol56</a>.</p>
-                <p>Code released under the <a href="https://github.com/Paracetamol56/OverSteam/blob/main/LICENSE">Apache
-                        License 2.0</a>.</p>
-                <p>Based on <a href="https://getbootstrap.com/" rel="nofollow">Bootstrap</a>. Icons from <a
-                        href="https://fontawesome.com/" rel="nofollow">Font Awesome</a>. Web fonts from <a
-                        href="https://fonts.google.com/" rel="nofollow">Google</a>.</p>
+        <footer id="footer">
+            <div class="row">
+                <div class="col-lg-12">
+                    <ul class="list-unstyled">
+                        <li class="float-end"><a href="#top">Back to top</a></li>
+                        <li><a href="https://github.com/Paracetamol56/OverSteam">GitHub</a></li>
+                        <li><a href="../about/#api">API</a></li>
+                        <li><a href="../about/#donate">Donate</a></li>
+                    </ul>
+                    <p>Made by <a href="https://github.com/Lechiffre4">Lechiffre4</a> and <a
+                            href="https://github.com/Paracetamol56">Paracetamol56</a>.</p>
+                    <p>Code released under the <a
+                            href="https://github.com/Paracetamol56/OverSteam/blob/main/LICENSE">Apache
+                            License 2.0</a>.</p>
+                    <p>Based on <a href="https://getbootstrap.com/" rel="nofollow">Bootstrap</a>. Icons from <a
+                            href="https://fontawesome.com/" rel="nofollow">Font Awesome</a>. Web fonts from <a
+                            href="https://fonts.google.com/" rel="nofollow">Google</a>.</p>
+                </div>
             </div>
-        </div>
-    </footer>
+        </footer>
     </div>
     <!-- Optional JavaScript -->
     <script src="/javascripts/jquery.min.js"></script>
@@ -143,55 +143,19 @@
 
     var id = $_GET('id');
 
-
-    fetch("/api/games/all", {
-        method: 'GET'
-    })
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (data) {
-            if (data.length > 0) {
-                data.forEach(function (game) {
-
-                    if (game['id'] == id) {
-
-                        //////fetch for the category/////////
-                        fetch("/api/categories/all", {
-                            method: 'GET'
-                        })
-                            .then(function (response) {
-                                return response.json();
-                            })
-                            .then(function (data) {
-                                if (data.length > 0) {
-                                    data.forEach(function (cat) {
-
-                                        if (game['CategoryId'] == cat['id']) {
-                                            const name = document.getElementById('name');
-                                            name.innerHTML =
-                                                `
-                                            <h1>`+ game['name'] + `</h1>
-                                            <a class="btn btn-outline-secondary my-auto" href="../shop">Shop</a>
-                                        `;
-
-                                            const text = document.getElementById('text');
-                                            text.innerHTML =
-                                                `
-                                            <h3>`+ cat['name'] + `</h3>
-                                            <p>`+ game['description'] + `</p>
-                                            <br/><br/><br/>
-                                            <a href="`+ game['link'] + `"  target="blank" class="btn btn-secondary pt-3 px-3">Official website</p>
-
-                                        `;
-                                        }
-                                    });
-                                }
-                            });
-                    }
-                });
+    // fetch api/games/id with ajax
+    if (id) {
+        $.ajax({
+            url: '/api/games/id?id=' + id,
+            type: 'GET',
+            success: function (data) {
+                $('#game-name').text(data.name);
+                $('#game-category').text(data.category);
+                $('#game-description').text(data.description);
+                $('#game-link').attr('href', data.link);
             }
         });
+    }
 
 </script>
 
