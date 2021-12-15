@@ -144,43 +144,27 @@
     var id = $_GET('id');
 
     if (id) {
-        fetch("/api/games/category?id=" + id, { method: "GET" })
-            .then(function (response) {
-                return response.json();
-            })
-            .then(function (gameData) {
-                if (gameData.length > 0) {
-                    // Display the name of the category
-                    fetch("/api/categories/all", { method: "GET" })
-                        .then(function (response) {
-                            return response.json();
-                        })
-                        .then(function (categoryData) {
-                            const category = categoryData[gameData[0].CategoryId - 1].name;
-                            gameList.innerHTML =
-                                `<div>
-                                    <h3>Games from category: ` + category + `</h3>
-                                </div>`;
-                        })
-                        .then(function () {
-                            // Display the games
-                            gameData.forEach(function (game) {
-                                console.log(game);
-                                gameList.innerHTML +=
-                                    `<div class="card border-primary mb-3 mx-3" style="width: 20rem;">
-                                <div class="card-body">
-                                    <h4 class="card-title">` + game['name'] + `</h4>
-                                    <p class="card-text">` + game['description'] + `</p>
-                                    <div class="d-flex justify-content-between">
-                                        <a href="#"class="btn btn-primary">View more</a>
-                                        <a href="#" class="btn btn-secondary">Add to my games</a>
-                                    </div>
-                                </div>
-                            </div>`;
-                            })
-                        });
-                }
-            });
+        $.ajax({
+            url: '/api/games/category?id=' + id,
+            type: 'GET',
+            success: function (data) {
+                $.each(data, function (index, value) {
+                    $('#game-list').append(
+                        `<div class="card border-primary mb-3 mx-3" style="width: 20rem;">
+                <div class="card-header" id ="category">${value.category}</div>
+                <div class="card-body">
+                    <h4 class="card-title">${value.name}</h4>
+                    <p class="card-text">${value.description}</p>
+                    <div class="d-flex justify-content-between">
+                        <a href="/game?id=${value.id}"class="btn btn-primary">View more</a>
+                        <a href="#" class="btn btn-secondary">Add to my games</a>
+                    </div>
+                </div>
+            </div>
+          </div>`);
+                });
+            }
+        });
     }
     else {
         $.ajax({
