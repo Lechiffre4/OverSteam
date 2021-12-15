@@ -137,6 +137,7 @@
                     <p class="card-text">${value.description}</p>
                     <div class="d-flex justify-content-between">
                         <a href="/game?id=${value.id}"class="btn btn-primary">View more</a>
+                        <button class="btn btn-secondary me-sm-2" type="button" onClick="DeleteGame(${value.id})">Remove</button>
                     </div>
                 </div>
             </div>
@@ -144,6 +145,32 @@
       });
     }
   });
+
+
+  function DeleteGame(id)
+  {
+    console.log(id);
+		console.log(token)
+
+		fetch("/api/games/remove", {
+			method: 'POST',
+			headers: {
+				"Content-Type": "application/json; charset=UTF-8"
+			},
+			body: JSON.stringify({
+				id: id,
+				token: token
+			})
+		})
+			.then(function (response) {
+				console.log(response);
+				return response.json();
+			})
+
+		//window.location.reload();
+  }
+
+
 </script>
 
 </html>

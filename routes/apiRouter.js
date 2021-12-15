@@ -22,6 +22,7 @@ exports.router = (function () {
     apiRouter.route('/games/category').get(gameCtrl.getGamesByCategory);
     apiRouter.route('/games/user').get(gameCtrl.getGamesByUser);
     apiRouter.route('/games/addtomygames').post(gameCtrl.addtoMyGames);
+    apiRouter.route('/games/remove').post(gameCtrl.DeleteGameLib);
 
     // Category routes
     apiRouter.route('/categories/all').get(categoryCtrl.getAllCategories);
