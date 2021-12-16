@@ -172,21 +172,29 @@
             url: '/api/games/all',
             type: 'GET',
             success: function (data) {
-                $.each(data, function (index, value) {
+                
+                if (data.length){
+                          $.each(data, function (index, value) {
+                              $('#game-list').append(
+                                  `<div class="card border-primary mb-3 mx-3" style="width: 20rem;">
+                          <div class="card-header" id ="category">${value.category}</div>
+                          <div class="card-body">
+                              <h4 class="card-title">${value.name}</h4>
+                              <p class="card-text">${value.description}</p>
+                              <div class="d-flex justify-content-between">
+                                  <a href="/game?id=${value.id}"class="btn btn-primary">View more</a>
+                                  <button class="btn btn-secondary me-sm-2" type="button" onClick="AddtoMyGames(${value.id})">Add to my games</button>
+                              </div>
+                          </div>
+                      </div>
+                    </div>`);
+                    });
+                }
+                else
+                {
                     $('#game-list').append(
-                        `<div class="card border-primary mb-3 mx-3" style="width: 20rem;">
-                <div class="card-header" id ="category">${value.category}</div>
-                <div class="card-body">
-                    <h4 class="card-title">${value.name}</h4>
-                    <p class="card-text">${value.description}</p>
-                    <div class="d-flex justify-content-between">
-                        <a href="/game?id=${value.id}"class="btn btn-primary">View more</a>
-                        <button class="btn btn-secondary me-sm-2" type="button" onClick="AddtoMyGames(${value.id})">Add to my games</button>
-                    </div>
-                </div>
-            </div>
-          </div>`);
-                });
+                    `<h3>No Game Found</h3>`);
+                }
             }
         });
     }
@@ -207,7 +215,6 @@
             })
         })
             .then(function (response) {
-                console.log(response);
                 return response.json();
             })
 

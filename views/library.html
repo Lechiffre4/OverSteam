@@ -128,6 +128,8 @@
       'authorization': token
     },
     success: function (data) {
+      console.log(data.lenght)
+      if (data.length){
       $.each(data, function (index, value) {
         $('#game-list').append(
           `<div class="card border-primary mb-3 mx-3" style="width: 20rem;">
@@ -143,6 +145,11 @@
             </div>
           </div>`);
       });
+    }
+    else{
+        $('#game-list').append(
+            `<h3>No game were found</h3>`);
+      }
     }
   });
 
