@@ -332,8 +332,7 @@ module.exports = {
 			});
 	},
 
-
-
+	
 	DeleteGameLib: function (req, res) {
 
 		idgame = req.body.id
@@ -341,7 +340,6 @@ module.exports = {
 		console.log(headerAuth)
 		var userId = utils.getUserId(headerAuth);
 		
-
 		if (userId < 0)
 			return res.status(400).json({ 'error': 'wrong token' });
 
@@ -358,8 +356,5 @@ module.exports = {
 			.catch(function (err) {
 				res.status(500).json({ 'error': 'cannot delete game' });
 			});
-
-
-
 	}
 };

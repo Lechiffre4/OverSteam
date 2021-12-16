@@ -160,7 +160,7 @@ module.exports = {
 					where: { UserId: user.id }
 				}).then(function (rawGgames) {
 					if (rawGgames.length == 0) {
-						return res.status(201).json({ 'games': [] });
+						return res.status(201).json(user);
 					}
 					rawGgames.forEach(function (currentGame) {
 						//get game

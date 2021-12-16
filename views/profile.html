@@ -145,24 +145,29 @@
 		},
 		type: 'GET',
 		success: function (data) {
-			console.log(data);
+			if (!(data.user))
+			{
+			document.getElementById('emailValue').innerHTML = data.email;
+			document.getElementById('usernameValue').innerHTML = data.username;
+			}
+			else{
 			document.getElementById('emailValue').innerHTML = data.user.email;
 			document.getElementById('usernameValue').innerHTML = data.user.username;
-
-			$.each(data.games, function (index, value) {
-				$('#game-list').append(
-					`<div class="card border-primary mb-3 mx-3" style="width: 20rem;">
-                <div class="card-header" id ="category">${value.category}</div>
-                <div class="card-body">
-                    <h4 class="card-title">${value.name}</h4>
-                    <p class="card-text">${value.description}</p>
-                    <div class="d-flex justify-content-between">
-					<button class="btn btn-secondary me-sm-2" type="button" onClick="DeleteGame(${value.id})">Delete</button>
-                    </div>
-                </div>
-            </div>
-          </div>`);
-			});
+				$.each(data.games, function (index, value) {
+					$('#game-list').append(
+						`<div class="card border-primary mb-3 mx-3" style="width: 20rem;">
+            	    <div class="card-header" id ="category">${value.category}</div>
+            	    <div class="card-body">
+            	        <h4 class="card-title">${value.name}</h4>
+            	        <p class="card-text">${value.description}</p>
+            	        <div class="d-flex justify-content-between">
+						<button class="btn btn-secondary me-sm-2" type="button" onClick="DeleteGame(${value.id})">Delete</button>
+            	        </div>
+            	    </div>
+            	</div>
+          		</div>`)
+				});
+			}
 		}
 	})
 
