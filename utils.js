@@ -1,7 +1,8 @@
 // Imports
+const { RequestHeaderFieldsTooLarge } = require('http-errors');
 var jwt = require('jsonwebtoken');
 
-const JWT_SIGN_SECRET = '<JWT_SIGN_TOKEN>';
+const JWT_SIGN_SECRET = process.env.SIGN_TOKEN;
 
 // Exported functions
 module.exports = {
@@ -12,7 +13,7 @@ module.exports = {
         },
             JWT_SIGN_SECRET,
             {
-                expiresIn: '1h'
+                expiresIn: '24h'
             })
     },
     parseAuthorization: function (authorization) {
@@ -29,5 +30,22 @@ module.exports = {
             } catch (err) { }
         }
         return userId;
+    },
+
+    checktoken : function(token)
+    {
+        if (token != null) 
+        {
+        	console.log("verified");
+            console.clear()
+            console.log(jwt.verify(token, process.env.SIGN_TOKEN))
+            return jwt.verify(token, process.env.SIGN_TOKEN);
+        } 
+        else
+        {
+        	console.log("ca marche pas ")
+            return null;
+        }
     }
+
 }

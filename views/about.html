@@ -1,0 +1,234 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+	<link rel="stylesheet" href="/stylesheets/custom.css">
+</head>
+
+<body>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="/">Oversteam</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
+				aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarColor01">
+				<ul class="navbar-nav me-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="/">Home</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/shop">Shop</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/library">Library</a>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+							aria-expanded="false">Categories</a>
+						<div class="dropdown-menu" id="category-dropdown">
+						</div>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/profile">Profile</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" href="/about">About</a>
+					</li>
+				</ul>
+				<div class="d-flex" id="btn">
+					<ul class="navbar-nav me-auto">
+						<li class="nav-item">
+							<a class="btn btn-secondary me-sm-2" href="/login">Login</a>
+						</li>
+						<li class="nav-item">
+							<a class="btn btn-secondary" href="/signin">Signin</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+		<div class="bs-docs-section clearfix" id="help">
+			<h2>Help</h2>
+			<p>Don't think I'm going to write a fuckin 'help page and beg for a little.</p>
+		</div>
+
+		<div class="bs-docs-section clearfix" id="donate">
+			<div class="row">
+				<h2>Please, buy us a coffee</h2>
+				<p>You don't have to make a choice, donate to both of us</p>
+				<div class="col-lg-6">
+					<h3>Lechiffre4</h3>
+					<button type="button" class="btn btn-info" onclick="window.open('https://www.paypal.com/paypalme/sahelh')">
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-paypal"
+							viewBox="0 0 16 16">
+							<path fill-rule="evenodd"
+								d="M14.06 3.713c.12-1.071-.093-1.832-.702-2.526C12.628.356 11.312 0 9.626 0H4.734a.7.7 0 0 0-.691.59L2.005 13.509a.42.42 0 0 0 .415.486h2.756l-.202 1.28a.628.628 0 0 0 .62.726H8.14c.429 0 .793-.31.862-.731l.025-.13.48-3.043.03-.164.001-.007a.351.351 0 0 1 .348-.297h.38c1.266 0 2.425-.256 3.345-.91.379-.27.712-.603.993-1.005a4.942 4.942 0 0 0 .88-2.195c.242-1.246.13-2.356-.57-3.154a2.687 2.687 0 0 0-.76-.59l-.094-.061zM6.543 8.82l-.845 5.213v.001l-.208 1.32c-.01.066.04.123.105.123H8.14c.173 0 .32-.125.348-.296v-.005l.026-.129.48-3.043.03-.164a.873.873 0 0 1 .862-.734h.38c1.201 0 2.24-.244 3.043-.815.797-.567 1.39-1.477 1.663-2.874.229-1.175.096-2.087-.45-2.71a2.126 2.126 0 0 0-.548-.438l-.003.016c-.645 3.312-2.853 4.456-5.672 4.456H6.864a.695.695 0 0 0-.321.079z" />
+						</svg>
+						Donate</button>
+				</div>
+				<div class="col-lg-6">
+					<h3>Paracetamol56</h3>
+					<button type="button" class="btn btn-info" onclick="window.open('https://www.paypal.com/paypalme/gamatheo')">
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-paypal"
+							viewBox="0 0 16 16">
+							<path fill-rule="evenodd"
+								d="M14.06 3.713c.12-1.071-.093-1.832-.702-2.526C12.628.356 11.312 0 9.626 0H4.734a.7.7 0 0 0-.691.59L2.005 13.509a.42.42 0 0 0 .415.486h2.756l-.202 1.28a.628.628 0 0 0 .62.726H8.14c.429 0 .793-.31.862-.731l.025-.13.48-3.043.03-.164.001-.007a.351.351 0 0 1 .348-.297h.38c1.266 0 2.425-.256 3.345-.91.379-.27.712-.603.993-1.005a4.942 4.942 0 0 0 .88-2.195c.242-1.246.13-2.356-.57-3.154a2.687 2.687 0 0 0-.76-.59l-.094-.061zM6.543 8.82l-.845 5.213v.001l-.208 1.32c-.01.066.04.123.105.123H8.14c.173 0 .32-.125.348-.296v-.005l.026-.129.48-3.043.03-.164a.873.873 0 0 1 .862-.734h.38c1.201 0 2.24-.244 3.043-.815.797-.567 1.39-1.477 1.663-2.874.229-1.175.096-2.087-.45-2.71a2.126 2.126 0 0 0-.548-.438l-.003.016c-.645 3.312-2.853 4.456-5.672 4.456H6.864a.695.695 0 0 0-.321.079z" />
+						</svg>
+						Donate</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="bs-docs-section clearfix" id="api">
+			<h2>API</h2>
+			<p>Our API is free and open, you can start using it now with this link and the route of your choice :</p>
+			<p><a href="https://oversteam.feet.best/api/">https://oversteam.herokuapp.com/api/</a></p>
+			<h3>User API</h3>
+			<h4>Register request</h4>
+			<p>Used to create a new user with <code>POST</code> method.</p>
+			<p>Path: <code>/users/register/</code></p>
+			<p>JSON example:
+			<pre><code>{
+    email: email,
+    password: password,
+}</code></pre>
+			</p>
+			<h4>Login request</h4>
+			<p>Used to log a user in with <code>POST</code> method.</p>
+			<p>Path: <code>/users/login/</code></p>
+			<p>JSON example:
+			<pre><code>{
+    email: email,
+    username: username,
+    password: password,
+    passwordVerif: passwordVerif
+}</code></pre>
+			</p>
+			<h4>Profile request</h4>
+			<p>Used to get user informations such as profile and games with <code>POST</code> method.</p>
+			<p>Path: <code>/users/me/</code></p>
+			<p>A valid connection token is required in headers.</p>
+
+			<h4>Profile modification request</h4>
+			<p>Used to modify user informations with <code>PUT</code> method.</p>
+			<p>Path: <code>/users/modify/</code></p>
+			<p>A valid connection token is required in headers.</p>
+
+			<h4>Profile modification request</h4>
+			<p>Used to modify user informations with <code>POST</code> method.</p>
+			<p>Path: <code>/users/deletemygame</code></p>
+			<p>A valid connection token is required in headers and a game id in the URI.</p>
+
+			<h3>Game API</h3>
+			<h4>Game addition request</h4>
+			<p>Used to add a game in the database with <code>POST</code> method.</p>
+			<p>Path: <code>/games/addgame</code></p>
+			<p>JSON example:
+			<pre><code>{
+    name: name,
+    description: desc,
+    author: token,
+    category: category,
+    link: link
+}</code></pre>
+			<p>A valid connection token is required in headers</p>
+
+			<h4>All games request</h4>
+			<p>Used to get all games with <code>GET</code> method.</p>
+			<p>Path: <code>/games/all</code></p>
+
+			<h4>Game by id request</h4>
+			<p>Used to get a unique game by the specified id with <code>GET</code> method.</p>
+			<p>Path: <code>/games/id</code></p>
+			<p>A game id is required in the URI.</p>
+
+			<h4>Game by category request</h4>
+			<p>Used to get all games having the specified gategory with <code>GET</code> method.</p>
+			<p>Path: <code>/games/category</code></p>
+			<p>A category id is required in the URI.</p>
+
+			<h4>Game by user request</h4>
+			<p>Used to get all games saved by the specified user with <code>GET</code> method.</p>
+			<p>Path: <code>/games/user</code></p>
+			<p>A valid connection token is required in headers.</p>
+
+			<h4>Game addition in the user library request</h4>
+			<p>Used to get a game to the user library with <code>POST</code> method.</p>
+			<p>Path: <code>/games/addtomygames</code></p>
+			<p>A category id is required in the URI.</p>
+
+			<h4>Game deletion request</h4>
+			<p>Used to remove a game from the database with <code>POST</code> method.</p>
+			<p>Path: <code>/games/remove</code></p>
+			<p>A category id is required in the URI.</p>
+
+			<h3>Category API</h3>
+			<h4>All categories request</h4>
+			<p>Used to get all the categories with <code>GET</code> method.</p>
+			<p>Path: <code>/categories/all</code></p>
+		</div>
+
+		<footer id="footer">
+			<div class="row">
+				<div class="col-lg-12">
+					<ul class="list-unstyled">
+						<li class="float-end"><a href="#top">Back to top</a></li>
+						<li><a href="https://github.com/Paracetamol56/OverSteam">GitHub</a></li>
+						<li><a href="../about/#api">API</a></li>
+						<li><a href="../about/#donate">Donate</a></li>
+					</ul>
+					<p>Made by <a href="https://github.com/Lechiffre4">Lechiffre4</a> and <a
+							href="https://github.com/Paracetamol56">Paracetamol56</a>.</p>
+					<p>Code released under the <a href="https://github.com/Paracetamol56/OverSteam/blob/main/LICENSE">Apache
+							License 2.0</a>.</p>
+					<p>Based on <a href="https://getbootstrap.com/" rel="nofollow">Bootstrap</a>. Icons from <a
+							href="https://fontawesome.com/" rel="nofollow">Font Awesome</a>. Web fonts from <a
+							href="https://fonts.google.com/" rel="nofollow">Google</a>.</p>
+				</div>
+			</div>
+		</footer>
+	</div>
+	<!-- Optional JavaScript -->
+	<script src="/javascripts/jquery.min.js"></script>
+	<script src="/javascripts/bootstrap.bundle.min.js"></script>
+	<script src="/javascripts/prism.js" data-manual></script>
+	<script src="/javascripts/custom.js"></script>
+</body>
+
+<script>
+	// Display categories in the dropdown menu
+	$(document).ready(function () {
+		$.ajax({
+			url: '/api/categories/all',
+			type: 'GET',
+			success: function (data) {
+				$.each(data, function (index, value) {
+					$('#category-dropdown').append('<a class="dropdown-item" href="/shop?id=' + value.id + '">' + value.name + '</a>');
+				});
+			}
+		});
+	});
+
+	const buttons = document.getElementById('btn');
+
+	if (document.cookie) {
+		buttons.innerHTML =
+			`<ul class="navbar-nav me-auto">
+				<li class="nav-item">
+					<a class="btn btn-secondary me-sm-2" href="/login">Disconnect</a>
+				</li>
+			</ul>
+			`;
+	};
+</script>
+
+</html>
